@@ -68,5 +68,57 @@ namespace CustomerService
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spBankDatabase_AddNewCustomer", firstNameParameter, lastNameParameter, emailParameter, joinedOnDateParameter, currentAccountBalanceParameter, savingsAccountBalanceParameter);
         }
+    
+        public virtual int spBankDatabase_WithdrawalFromCurrentAccount(Nullable<int> customerId, Nullable<decimal> funds)
+        {
+            var customerIdParameter = customerId.HasValue ?
+                new ObjectParameter("CustomerId", customerId) :
+                new ObjectParameter("CustomerId", typeof(int));
+    
+            var fundsParameter = funds.HasValue ?
+                new ObjectParameter("Funds", funds) :
+                new ObjectParameter("Funds", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spBankDatabase_WithdrawalFromCurrentAccount", customerIdParameter, fundsParameter);
+        }
+    
+        public virtual int spBankDatabase_DepositToCurrentAccount(Nullable<int> customerId, Nullable<decimal> funds)
+        {
+            var customerIdParameter = customerId.HasValue ?
+                new ObjectParameter("CustomerId", customerId) :
+                new ObjectParameter("CustomerId", typeof(int));
+    
+            var fundsParameter = funds.HasValue ?
+                new ObjectParameter("Funds", funds) :
+                new ObjectParameter("Funds", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spBankDatabase_DepositToCurrentAccount", customerIdParameter, fundsParameter);
+        }
+    
+        public virtual int spBankDatabase_DepositToSavingsAccount(Nullable<int> customerId, Nullable<decimal> funds)
+        {
+            var customerIdParameter = customerId.HasValue ?
+                new ObjectParameter("CustomerId", customerId) :
+                new ObjectParameter("CustomerId", typeof(int));
+    
+            var fundsParameter = funds.HasValue ?
+                new ObjectParameter("Funds", funds) :
+                new ObjectParameter("Funds", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spBankDatabase_DepositToSavingsAccount", customerIdParameter, fundsParameter);
+        }
+    
+        public virtual int spBankDatabase_WithdrawalFromSavingsAccount(Nullable<int> customerId, Nullable<decimal> requestedFunds)
+        {
+            var customerIdParameter = customerId.HasValue ?
+                new ObjectParameter("CustomerId", customerId) :
+                new ObjectParameter("CustomerId", typeof(int));
+    
+            var requestedFundsParameter = requestedFunds.HasValue ?
+                new ObjectParameter("RequestedFunds", requestedFunds) :
+                new ObjectParameter("RequestedFunds", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spBankDatabase_WithdrawalFromSavingsAccount", customerIdParameter, requestedFundsParameter);
+        }
     }
 }

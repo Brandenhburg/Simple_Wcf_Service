@@ -23,13 +23,13 @@ namespace CustomerService
         [OperationContract(IsOneWay = true)]
         void GetCustomerInfo(int id);
 
-        [OperationContract(IsOneWay = true)]    
-        void Withdraw(int customerId,  decimal amount,  string fromAccountType);
+        [OperationContract(IsOneWay = true)]
+        void Withdraw(int customerId, decimal amount, string fromAccountType);
 
-        [OperationContract(IsOneWay = true)]  
-        void Depozit(int customerId, decimal amount, string toAccountType);
+        [OperationContract(IsOneWay = true)]
+        void Deposit(int customerId, decimal amount, string toAccountType);
 
-        [OperationContract(IsOneWay = true)] 
+        [OperationContract(IsOneWay = true)]
         void InnerTransfer(int customerId, decimal amount, string fromAccountType, string toAccountType);
 
         [OperationContract(IsOneWay = true)]

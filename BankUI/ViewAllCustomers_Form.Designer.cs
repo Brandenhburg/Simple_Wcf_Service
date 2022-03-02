@@ -31,7 +31,6 @@ namespace BankUI
         {
             this.components = new System.ComponentModel.Container();
             this.viewAllcustomersTable = new System.Windows.Forms.DataGridView();
-            this.customerInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Customer_Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Firstname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Lastname = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,6 +38,9 @@ namespace BankUI
             this.JoinedOnDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CurrentBalance = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SavingsBalance = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customerInfoBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.button_RefreshView = new System.Windows.Forms.Button();
+            this.button_ExitViewAllCustomers = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.viewAllcustomersTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.customerInfoBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -58,10 +60,6 @@ namespace BankUI
             this.viewAllcustomersTable.Name = "viewAllcustomersTable";
             this.viewAllcustomersTable.Size = new System.Drawing.Size(691, 397);
             this.viewAllcustomersTable.TabIndex = 0;
-            // 
-            // customerInfoBindingSource
-            // 
-            this.customerInfoBindingSource.DataSource = typeof(BankUI.BankCustomers.CustomerInfo);
             // 
             // Customer_Id
             // 
@@ -113,11 +111,39 @@ namespace BankUI
             this.SavingsBalance.Name = "SavingsBalance";
             this.SavingsBalance.ReadOnly = true;
             // 
+            // customerInfoBindingSource
+            // 
+            this.customerInfoBindingSource.DataSource = typeof(BankUI.BankCustomers.CustomerInfo);
+            // 
+            // button_RefreshView
+            // 
+            this.button_RefreshView.Font = new System.Drawing.Font("Lucida Fax", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_RefreshView.Location = new System.Drawing.Point(436, 405);
+            this.button_RefreshView.Name = "button_RefreshView";
+            this.button_RefreshView.Size = new System.Drawing.Size(130, 25);
+            this.button_RefreshView.TabIndex = 1;
+            this.button_RefreshView.Text = "Refresh";
+            this.button_RefreshView.UseVisualStyleBackColor = true;
+            this.button_RefreshView.Click += new System.EventHandler(this.button_RefreshView_Click);
+            // 
+            // button_ExitViewAllCustomers
+            // 
+            this.button_ExitViewAllCustomers.Font = new System.Drawing.Font("Lucida Fax", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_ExitViewAllCustomers.Location = new System.Drawing.Point(572, 405);
+            this.button_ExitViewAllCustomers.Name = "button_ExitViewAllCustomers";
+            this.button_ExitViewAllCustomers.Size = new System.Drawing.Size(130, 25);
+            this.button_ExitViewAllCustomers.TabIndex = 2;
+            this.button_ExitViewAllCustomers.Text = "Exit";
+            this.button_ExitViewAllCustomers.UseVisualStyleBackColor = true;
+            this.button_ExitViewAllCustomers.Click += new System.EventHandler(this.button_ExitViewAllCustomers_Click);
+            // 
             // ViewAllCustomers_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(714, 406);
+            this.ClientSize = new System.Drawing.Size(714, 436);
+            this.Controls.Add(this.button_ExitViewAllCustomers);
+            this.Controls.Add(this.button_RefreshView);
             this.Controls.Add(this.viewAllcustomersTable);
             this.Name = "ViewAllCustomers_Form";
             this.Text = "ViewAllCustomers_Form";
@@ -138,5 +164,7 @@ namespace BankUI
         private System.Windows.Forms.DataGridViewTextBoxColumn JoinedOnDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn CurrentBalance;
         private System.Windows.Forms.DataGridViewTextBoxColumn SavingsBalance;
+        private System.Windows.Forms.Button button_RefreshView;
+        private System.Windows.Forms.Button button_ExitViewAllCustomers;
     }
 }

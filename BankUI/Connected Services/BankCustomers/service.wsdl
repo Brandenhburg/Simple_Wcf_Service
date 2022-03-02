@@ -58,8 +58,8 @@
   <wsdl:message name="IBankCustomer_Service_Withdraw_InputMessage">
     <wsdl:part name="parameters" element="tns:Withdraw" />
   </wsdl:message>
-  <wsdl:message name="IBankCustomer_Service_Depozit_InputMessage">
-    <wsdl:part name="parameters" element="tns:Depozit" />
+  <wsdl:message name="IBankCustomer_Service_Deposit_InputMessage">
+    <wsdl:part name="parameters" element="tns:Deposit" />
   </wsdl:message>
   <wsdl:message name="IBankCustomer_Service_InnerTransfer_InputMessage">
     <wsdl:part name="parameters" element="tns:InnerTransfer" />
@@ -89,8 +89,8 @@
     <wsdl:operation name="Withdraw">
       <wsdl:input wsaw:Action="http://tempuri.org/IBankCustomer_Service/Withdraw" message="tns:IBankCustomer_Service_Withdraw_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Depozit">
-      <wsdl:input wsaw:Action="http://tempuri.org/IBankCustomer_Service/Depozit" message="tns:IBankCustomer_Service_Depozit_InputMessage" />
+    <wsdl:operation name="Deposit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBankCustomer_Service/Deposit" message="tns:IBankCustomer_Service_Deposit_InputMessage" />
     </wsdl:operation>
     <wsdl:operation name="InnerTransfer">
       <wsdl:input wsaw:Action="http://tempuri.org/IBankCustomer_Service/InnerTransfer" message="tns:IBankCustomer_Service_InnerTransfer_InputMessage" />
@@ -136,8 +136,8 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="Depozit">
-      <soap12:operation soapAction="http://tempuri.org/IBankCustomer_Service/Depozit" style="document" />
+    <wsdl:operation name="Deposit">
+      <soap12:operation soapAction="http://tempuri.org/IBankCustomer_Service/Deposit" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

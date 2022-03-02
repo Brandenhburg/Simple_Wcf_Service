@@ -17,7 +17,7 @@ namespace BankUI
             InitializeComponent();
 
 
-            MinimumSize = new Size { Height = 445, Width = 730 };
+            MinimumSize = new Size { Height = 475, Width = 730 };
             MaximumSize = MinimumSize;
 
             StartPosition = FormStartPosition.CenterScreen;
@@ -29,6 +29,21 @@ namespace BankUI
             bankCustomer_ServiceClient.GetAllCustomers();        
         }
 
+        private void button_ExitViewAllCustomers_Click(object sender, System.EventArgs e)
+        {
+            this.Close();
+        }
+        private void button_RefreshView_Click(object sender, System.EventArgs e)
+        {
+            viewAllcustomersTable.Rows.Clear();
+            bankCustomer_ServiceClient.GetAllCustomers();
+        }
+        
+
+
+
+
+        //Callbacks
         public void OperationResult(string result)
         {
             //throw new System.NotImplementedException();
@@ -44,5 +59,7 @@ namespace BankUI
         {
             //throw new System.NotImplementedException();
         }
+
+
     }
 }

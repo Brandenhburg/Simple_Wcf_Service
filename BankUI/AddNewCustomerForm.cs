@@ -41,23 +41,23 @@ namespace BankUI
 
             if (Depozit)
             {
-                button_DepozitFunds.Text = "Cancel";
+                button_DepozitFunds.Text = "Discard";
 
   
 
-                label_CurrentFunds = new Label() { Location = new Point { X = 316, Y = 72 } };
+                label_CurrentFunds = new Label() { Location = new Point { X = 338, Y = 72 } };
                 label_CurrentFunds.Size = new Size { Width = 100, Height = 13 };
                 label_CurrentFunds.Text = "Current Account";
 
-                label_SavingsFunds = new Label() { Location = new Point { X = 316, Y = 120 } };
+                label_SavingsFunds = new Label() { Location = new Point { X = 338, Y = 120 } };
                 label_SavingsFunds.Size = new Size { Width = 100, Height = 13 };
                 label_SavingsFunds.Text = "Savings Account";
 
-                textBox_CurrentFundsValue = new TextBox() { Location = new Point { X = 316, Y = 88 } };
-                textBox_CurrentFundsValue.Size = new Size { Width = 148, Height = 20 };
+                textBox_CurrentFundsValue = new TextBox() { Location = new Point { X = 338, Y = 88 } };
+                textBox_CurrentFundsValue.Size = new Size { Width = 150, Height = 20 };
 
-                textBox_SavingsFundsValue = new TextBox() { Location = new Point { X = 316, Y = 136 } };
-                textBox_SavingsFundsValue.Size = new Size { Width = 148, Height = 20 };
+                textBox_SavingsFundsValue = new TextBox() { Location = new Point { X = 338, Y = 136 } };
+                textBox_SavingsFundsValue.Size = new Size { Width = 150, Height = 20 };
 
                 Controls.Add(label_CurrentFunds);
                 Controls.Add(label_SavingsFunds);

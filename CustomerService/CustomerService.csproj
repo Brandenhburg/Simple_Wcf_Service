@@ -55,6 +55,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\CustomerException.cs" />
+    <Compile Include="ManageAccounts\Accounts.cs" />
+    <Compile Include="ManageAccounts\CurrentAccountManager.cs" />
+    <Compile Include="Data\ManageMockCustomerInfo.cs" />
+    <Compile Include="ManageAccounts\IAccountManager.cs" />
+    <Compile Include="ManageAccounts\SavingsAccountManager.cs" />
     <Compile Include="BankDatabase.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -78,13 +84,16 @@
     </Compile>
     <Compile Include="CustomerInfo.cs" />
     <Compile Include="BankCustomer_Service.cs" />
+    <Compile Include="Data\ManagerCustomerInfo.cs" />
+    <Compile Include="Data\IManagerCustomerInfo.cs" />
     <Compile Include="IBankCustomer_Service.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SavingsAccount.cs">
       <DependentUpon>BankDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="SeedDatabase.cs" />
+    <Compile Include="Data\Database.cs" />
+    <Compile Include="InterestRate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -106,6 +115,12 @@
       <LastGenOutput>BankDatabase.Context.cs</LastGenOutput>
       <DependentUpon>BankDatabase.edmx</DependentUpon>
     </Content>
+    <Content Include="StoredProcedures\WithdrawalFromSavingsAccount.sql" />
+    <Content Include="StoredProcedures\WithdrawalFromCurrentAccount.sql" />
+    <Content Include="StoredProcedures\DepositToSavingsAccount.sql" />
+    <Content Include="StoredProcedures\DepositToCurrentAccount.sql" />
+    <Content Include="StoredProcedures\DeleteCustomerFromDb.sql" />
+    <Content Include="StoredProcedures\CreateNewCustomer.sql" />
     <Content Include="BankDatabase.edmx.sql" />
     <Content Include="BankDatabase.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

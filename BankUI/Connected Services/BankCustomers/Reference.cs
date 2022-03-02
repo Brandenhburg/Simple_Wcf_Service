@@ -182,11 +182,11 @@ namespace BankUI.BankCustomers {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBankCustomer_Service/Withdraw")]
         System.Threading.Tasks.Task WithdrawAsync(int customerId, decimal amount, string fromAccountType);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBankCustomer_Service/Depozit")]
-        void Depozit(int customerId, decimal amount, string toAccountType);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBankCustomer_Service/Deposit")]
+        void Deposit(int customerId, decimal amount, string toAccountType);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBankCustomer_Service/Depozit")]
-        System.Threading.Tasks.Task DepozitAsync(int customerId, decimal amount, string toAccountType);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBankCustomer_Service/Deposit")]
+        System.Threading.Tasks.Task DepositAsync(int customerId, decimal amount, string toAccountType);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBankCustomer_Service/InnerTransfer")]
         void InnerTransfer(int customerId, decimal amount, string fromAccountType, string toAccountType);
@@ -274,12 +274,12 @@ namespace BankUI.BankCustomers {
             return base.Channel.WithdrawAsync(customerId, amount, fromAccountType);
         }
         
-        public void Depozit(int customerId, decimal amount, string toAccountType) {
-            base.Channel.Depozit(customerId, amount, toAccountType);
+        public void Deposit(int customerId, decimal amount, string toAccountType) {
+            base.Channel.Deposit(customerId, amount, toAccountType);
         }
         
-        public System.Threading.Tasks.Task DepozitAsync(int customerId, decimal amount, string toAccountType) {
-            return base.Channel.DepozitAsync(customerId, amount, toAccountType);
+        public System.Threading.Tasks.Task DepositAsync(int customerId, decimal amount, string toAccountType) {
+            return base.Channel.DepositAsync(customerId, amount, toAccountType);
         }
         
         public void InnerTransfer(int customerId, decimal amount, string fromAccountType, string toAccountType) {

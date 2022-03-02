@@ -43,9 +43,10 @@ namespace BankUI
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(93, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 13);
+            this.label1.Size = new System.Drawing.Size(62, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "Firstname";
             // 
@@ -53,15 +54,16 @@ namespace BankUI
             // 
             this.textBox_FirstName.Location = new System.Drawing.Point(96, 38);
             this.textBox_FirstName.Name = "textBox_FirstName";
-            this.textBox_FirstName.Size = new System.Drawing.Size(100, 20);
+            this.textBox_FirstName.Size = new System.Drawing.Size(150, 20);
             this.textBox_FirstName.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(92, 72);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 13);
+            this.label2.Size = new System.Drawing.Size(62, 15);
             this.label2.TabIndex = 2;
             this.label2.Text = "Lastname";
             // 
@@ -69,15 +71,16 @@ namespace BankUI
             // 
             this.textBox_LastName.Location = new System.Drawing.Point(96, 88);
             this.textBox_LastName.Name = "textBox_LastName";
-            this.textBox_LastName.Size = new System.Drawing.Size(100, 20);
+            this.textBox_LastName.Size = new System.Drawing.Size(150, 20);
             this.textBox_LastName.TabIndex = 3;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(93, 120);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(32, 13);
+            this.label3.Size = new System.Drawing.Size(39, 15);
             this.label3.TabIndex = 4;
             this.label3.Text = "Email";
             // 
@@ -85,14 +88,15 @@ namespace BankUI
             // 
             this.textBox_Email.Location = new System.Drawing.Point(96, 136);
             this.textBox_Email.Name = "textBox_Email";
-            this.textBox_Email.Size = new System.Drawing.Size(100, 20);
+            this.textBox_Email.Size = new System.Drawing.Size(150, 20);
             this.textBox_Email.TabIndex = 5;
             // 
             // button_DepozitFunds
             // 
-            this.button_DepozitFunds.Location = new System.Drawing.Point(316, 38);
+            this.button_DepozitFunds.Font = new System.Drawing.Font("Lucida Fax", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_DepozitFunds.Location = new System.Drawing.Point(338, 213);
             this.button_DepozitFunds.Name = "button_DepozitFunds";
-            this.button_DepozitFunds.Size = new System.Drawing.Size(148, 20);
+            this.button_DepozitFunds.Size = new System.Drawing.Size(150, 40);
             this.button_DepozitFunds.TabIndex = 6;
             this.button_DepozitFunds.Text = "Depozit Funds";
             this.button_DepozitFunds.UseVisualStyleBackColor = true;
@@ -100,9 +104,10 @@ namespace BankUI
             // 
             // button_CreateNewCustomer
             // 
+            this.button_CreateNewCustomer.Font = new System.Drawing.Font("Lucida Fax", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_CreateNewCustomer.Location = new System.Drawing.Point(95, 213);
             this.button_CreateNewCustomer.Name = "button_CreateNewCustomer";
-            this.button_CreateNewCustomer.Size = new System.Drawing.Size(148, 20);
+            this.button_CreateNewCustomer.Size = new System.Drawing.Size(150, 40);
             this.button_CreateNewCustomer.TabIndex = 7;
             this.button_CreateNewCustomer.Text = "Submit";
             this.button_CreateNewCustomer.UseVisualStyleBackColor = true;
@@ -110,11 +115,12 @@ namespace BankUI
             // 
             // button_CancelCreateNewCustomer
             // 
-            this.button_CancelCreateNewCustomer.Location = new System.Drawing.Point(95, 239);
+            this.button_CancelCreateNewCustomer.Font = new System.Drawing.Font("Lucida Fax", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_CancelCreateNewCustomer.Location = new System.Drawing.Point(95, 259);
             this.button_CancelCreateNewCustomer.Name = "button_CancelCreateNewCustomer";
-            this.button_CancelCreateNewCustomer.Size = new System.Drawing.Size(148, 20);
+            this.button_CancelCreateNewCustomer.Size = new System.Drawing.Size(150, 40);
             this.button_CancelCreateNewCustomer.TabIndex = 8;
-            this.button_CancelCreateNewCustomer.Text = "Cancel";
+            this.button_CancelCreateNewCustomer.Text = "Exit";
             this.button_CancelCreateNewCustomer.UseVisualStyleBackColor = true;
             this.button_CancelCreateNewCustomer.Click += new System.EventHandler(this.button_CancelCreateNewCustomer_Click);
             // 

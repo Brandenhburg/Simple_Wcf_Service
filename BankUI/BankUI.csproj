@@ -54,6 +54,7 @@
     <Compile Include="AddNewCustomerForm.Designer.cs">
       <DependentUpon>AddNewCustomerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CheckSelectedAcc.cs" />
     <Compile Include="Connected Services\BankCustomers\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -65,7 +66,7 @@
     <Compile Include="Main_Form.Designer.cs">
       <DependentUpon>Main_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\DepozitOperation.cs" />
+    <Compile Include="Operations\DepositOperation.cs" />
     <Compile Include="Operations\InnerTransferOperation.cs" />
     <Compile Include="Operations\IOperationType.cs" />
     <Compile Include="Operations\WithdrawalOperation.cs" />

@@ -14,6 +14,7 @@ namespace BankUI
     {
         IOperationType operationType;
         CustomerInfo customerInfo;
+        CheckSelectedItems check;
 
         InstanceContext instance;
         BankCustomer_ServiceClient bankCustomer_ServiceClient;
@@ -26,6 +27,8 @@ namespace BankUI
 
             instance = new InstanceContext(this);
             bankCustomer_ServiceClient = new BankCustomer_ServiceClient(instance, "NetTcpBinding_IBankCustomer_Service");
+
+            check = new CheckSelectedItems();
         }
 
 
@@ -37,7 +40,6 @@ namespace BankUI
 
             newCustomerForm.Show();
         }
-
         private void button_RemoveCustomer_Click(object sender, EventArgs e)
         {
             try
@@ -59,7 +61,6 @@ namespace BankUI
                 MessageBox.Show("Select Customer to delete");
             }
         }
-
         private void button_SearchCustomer_Click(object sender, EventArgs e)
         {
             try
@@ -74,22 +75,96 @@ namespace BankUI
             }
             
         }
-
         private void button_ViewAllCustomers_Click(object sender, EventArgs e)
         {
             ViewAllCustomers_Form viewAllCustomers_Form = new ViewAllCustomers_Form();
             viewAllCustomers_Form.Show();
         }
 
+
+
+
+        //ManageFunds
         private async void button_ManageFunds_Click(object sender, EventArgs e)
         {
+            
             while (panel_ManageFunds.Location.X > this.Size.Width / 2)
             {
                 await Task.Delay(1);
                 panel_ManageFunds.Location = new Point (panel_ManageFunds.Location.X - 20, 0 );
             }
-        }
 
+            button_SearchCustomer.Enabled = false;
+            textBox_CustomerId.Enabled = false;
+        }
+        private void button_Depozit_Click(object sender, EventArgs e)
+        {
+            operationType = new DepositOperation(bankCustomer_ServiceClient);
+
+
+            comboBox_fromAccountType.SelectedIndex = -1;
+            comboBox_fromAccountType.Enabled = false;
+            comboBox_toAccountType.Enabled = true;
+
+            textBox_fundsAmount.Enabled = true;
+
+            button_AcceptFundsOperation.Enabled = true;
+        }
+        private void button_Withdraw_Click(object sender, EventArgs e)
+        {
+            operationType = new WithdrawalOperation(bankCustomer_ServiceClient);
+
+            comboBox_toAccountType.SelectedIndex = -1;
+            comboBox_toAccountType.Enabled = false;
+            comboBox_fromAccountType.Enabled = true;
+
+            textBox_fundsAmount.Enabled = true;
+
+            button_AcceptFundsOperation.Enabled = true;
+        }
+        private void button_InnerTransfer_Click(object sender, EventArgs e)
+        {
+            operationType = new InnerTransferOperation(bankCustomer_ServiceClient);
+
+            comboBox_fromAccountType.Enabled = true;
+            comboBox_fromAccountType.SelectedIndex = -1;
+
+            comboBox_toAccountType.Enabled = true;
+            comboBox_toAccountType.SelectedIndex = -1;
+
+            textBox_fundsAmount.Enabled = true;
+
+            button_AcceptFundsOperation.Enabled = true;       
+        }
+        private void button_AcceptFundsOperation_Click(object sender, EventArgs e)
+        {
+      
+            bool correctSelectedAcc = check.CheckSelectedAccounts(operationType, comboBox_fromAccountType.SelectedIndex, comboBox_toAccountType.SelectedIndex);
+
+
+            if (correctSelectedAcc)
+            {
+                string fromAcc = comboBox_fromAccountType.SelectedItem?.ToString();
+                string toAcc = comboBox_toAccountType.SelectedItem?.ToString();
+                decimal fundsAmount = decimal.Parse(textBox_fundsAmount.Text);
+
+                try
+                {
+                    operationType.ProcessOperation(customerInfo.Id, fundsAmount, fromAcc, toAcc);
+
+                    textBox_fundsAmount.Text = "";
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show("Incorect amount");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select an account ");
+                return;
+            } 
+        }
         private async void button_CancelManagerFunds_Click(object sender, EventArgs e)
         {
             while (panel_ManageFunds.Location.X < this.Size.Width - 20)
@@ -100,6 +175,10 @@ namespace BankUI
                 panel_ManageFunds.Location = new Point (panel_ManageFunds.Location.X + 20,  0 );
             }
 
+            button_SearchCustomer.Enabled = true;
+            textBox_CustomerId.Enabled = true;
+
+
             textBox_fundsAmount.Enabled = false;
             textBox_fundsAmount.Text = string.Empty;
 
@@ -108,81 +187,6 @@ namespace BankUI
 
             comboBox_toAccountType.Enabled = false;
             comboBox_toAccountType.Text = "Select Account";
-        }
-
-
-
-
-        private void button_Depozit_Click(object sender, EventArgs e)
-        {
-            operationType = new DepozitOperation(bankCustomer_ServiceClient);
-
-            comboBox_toAccountType.Enabled = true;
-            comboBox_fromAccountType.Enabled = false;
-
-            textBox_fundsAmount.Enabled = true;
-
-            button_AcceptFundsOperation.Enabled = true;
-        }
-
-        private void button_Withdraw_Click(object sender, EventArgs e)
-        {
-            operationType = new WithdrawalOperation(bankCustomer_ServiceClient);
-
-
-            comboBox_toAccountType.Enabled = false;
-            comboBox_fromAccountType.Enabled = true;
-
-            textBox_fundsAmount.Enabled = true;
-
-            button_AcceptFundsOperation.Enabled = true;
-        }
-
-        private void button_InnerTransfer_Click(object sender, EventArgs e)
-        {
-            operationType = new InnerTransferOperation(bankCustomer_ServiceClient);
-
-            comboBox_fromAccountType.Enabled = true;
-            comboBox_toAccountType.Enabled = true;
-
-            textBox_fundsAmount.Enabled = true;
-
-            button_AcceptFundsOperation.Enabled = true;       
-        }
-
-        private void button_AcceptFundsOperation_Click(object sender, EventArgs e)
-        {
-
-            //textBox_fundsAmount.Text = comboBox_fromAccountType.SelectedIndex.ToString();
-
-            //textBox_fundsAmount.Text += comboBox_fromAccountType.SelectedIndex.ToString();
-            try
-            {
-                if (operationType is InnerTransferOperation)
-                {
-                    if (comboBox_fromAccountType.SelectedIndex == comboBox_toAccountType.SelectedIndex)
-                    {
-                        MessageBox.Show("Select different accounts");
-                    }
-                    else if (comboBox_fromAccountType.SelectedIndex == -1 || comboBox_toAccountType.SelectedIndex == -1)
-                    {
-                        MessageBox.Show("Select different accounts");
-                    }
-  
-                    return;
-                }
-
-
-                string fromAcc = comboBox_fromAccountType.SelectedItem?.ToString();
-                string toAcc = comboBox_toAccountType.SelectedItem?.ToString();
-
-                decimal fundsAmount = decimal.Parse(textBox_fundsAmount.Text);
-                operationType.ProcessOperation(customerInfo.Id, fundsAmount, fromAcc, toAcc);
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("Incorect amount");
-            }
         }
 
 

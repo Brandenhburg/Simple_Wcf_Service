@@ -1,223 +1,124 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Threading;
+using CustomerService.Data;
+using CustomerService.ManageAccounts;
+using CustomerService.Exceptions;
 
 namespace CustomerService
 {
-    //[ServiceBehavior(TransactionIsolationLevel = IsolationLevel.ReadCommitted, TransactionTimeout = "00:00:45")]
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession, ConcurrencyMode = ConcurrencyMode.Single)]
     public class BankCustomer_Service : IBankCustomer_Service
     {
+        private Accounts accounts;
+        private IManagerCustomerInfo manageCustomerInfo;
+        private IAccountManager accountManager;
+        public BankCustomer_Service()
+        {
+            //manageCustomerInfo = new ManageMockCustomerInfo();
+            manageCustomerInfo = new ManagerCustomerInfo();
+            accounts = new Accounts();
+        }
+
+
         public void CreateCustomer(string firstName, string lastName, string email, string createdOnDate, decimal currentFunds = 0, decimal savingsFunds = 0)
         {
-            using (BankDatabaseContainer context = new BankDatabaseContainer())
+            try
             {
-                context.spBankDatabase_AddNewCustomer(firstName, lastName, email, createdOnDate, currentFunds, savingsFunds);
-                context.SaveChanges();
-
-                if (context.Customers.FirstOrDefault(e => e.Email == email) == null)
-                {
-                    OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Something went wrong. Try again");
-                }
-                else
-                {
-                    OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Customer Created");
-                }
+                manageCustomerInfo.AddNewCustomer(firstName, lastName, email, createdOnDate, currentFunds, savingsFunds);
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("The customer was successfully created");
             }
+            catch (CustomerException ex)
+            {
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult(ex.Message);
+            }    
         }
 
-        public void DeleteCustomer(int id)
+        public void DeleteCustomer(int customerId)
         {
-            using (BankDatabaseContainer context = new BankDatabaseContainer())
+            try
             {
-                if (context.Customers.FirstOrDefault(c => c.Id == id) == null)
-                {
-                    OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Customer with such Id not found");
-                }
-                else
-                {
-                    context.spBankDatabase_DeleteCustomer(id);
-                    context.SaveChanges();
-                    OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Customer deleted");
-                }
-                    
+                manageCustomerInfo.DeleteCustomer(customerId);
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("The customer was deleted from database");
             }
+            catch (CustomerException ex)
+            {
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult(ex.Message);
+            }
+
         }
 
+
+        //GetData
         public void  GetCustomerInfo(int id)
         {
-
-            CustomerInfo customer = getUpdatedInfo(id);
-
-            if (customer is null)
+            try
             {
-                //throw new FaultException("Customer with such Id not found");
-                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Customer with such Id not found");
-                return;
+                CustomerInfo customerInfo = manageCustomerInfo.GetUpdatedInfo(id);
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendCustomerInfo(customerInfo);
             }
-            OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendCustomerInfo(getUpdatedInfo(id));
-
-            Console.WriteLine($"{OperationContext.Current.SessionId}, {Thread.CurrentThread.ManagedThreadId}");
-        }
-
-        public void Depozit(int customerId, decimal fundsTodepozit, string toAccountType)
-        {
-            using (BankDatabaseContainer context = new BankDatabaseContainer())
+            catch (CustomerException ex)
             {
-                if (toAccountType == "Current Account")
-                {
-                    context.CurrentAccounts.FirstOrDefault(c => c.Customer.Id == customerId).CurrentBalance += fundsTodepozit;
-                    context.SaveChanges();
-                    OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendCustomerInfo(getUpdatedInfo(customerId));
-                    OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Operation Succeded");
-                }
-                else
-                {
-                    context.SavingsAccounts.FirstOrDefault(c => c.Customer.Id == customerId).SavingsBalance += fundsTodepozit;
-                    context.SaveChanges();
-                    OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendCustomerInfo(getUpdatedInfo(customerId));
-                    OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Operation Succeded");
-                }
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult(ex.Message);
             }
         }
-
-        public void Withdraw(int customerId, decimal amount, string fromAccountType)
-        {
-            using (BankDatabaseContainer context = new BankDatabaseContainer())
-            {
-                if (fromAccountType == "Current Account")
-                {
-                    if (context.CurrentAccounts.FirstOrDefault(c => c.Customer.Id == customerId).CurrentBalance < amount)
-                    {
-                        OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Not enough funds to perform operation");
-                    }  
-                    else
-                    {
-                        context.CurrentAccounts.FirstOrDefault(a => a.Customer.Id == customerId).CurrentBalance -= amount;
-                        context.SaveChanges();
-                        OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendCustomerInfo(getUpdatedInfo(customerId));
-                        OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Operation succeded");
-                    }
-                }
-                else
-                {
-                    if (context.SavingsAccounts.FirstOrDefault(c => c.Customer.Id == customerId).SavingsBalance < amount)
-                    {
-                        OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Not enough funds to perform operation");
-                        return;
-                    }               
-                    else
-                    {
-                        context.SavingsAccounts.FirstOrDefault(c => c.Customer.Id == customerId).SavingsBalance -= amount;
-                        context.SaveChanges();
-                        OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendCustomerInfo(getUpdatedInfo(customerId));
-                        OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Operation succeded");
-                    }
-                }
-            }
-        }
-
-        public void InnerTransfer(int customerId, decimal amount, string fromAccountType, string toAccountType)
-        {
-            using (BankDatabaseContainer context = new BankDatabaseContainer())
-            {
-                if (fromAccountType == "Current Account")
-                {
-                    if (context.CurrentAccounts.FirstOrDefault(a => a.Customer.Id == customerId).CurrentBalance < amount)
-                    {
-                        OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Not enough funds to perform operation");
-                    }
-                    else
-                    {
-                        context.CurrentAccounts.FirstOrDefault(a => a.Customer.Id == customerId).CurrentBalance -= amount;
-                        context.SavingsAccounts.FirstOrDefault(a => a.Customer.Id == customerId).SavingsBalance += amount;
-
-                        context.SaveChanges();
-                        OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendCustomerInfo(getUpdatedInfo(customerId));
-                        OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Operation Succeded");
-
-                    }
-     
-                }
-                else
-                {
-                    if (context.SavingsAccounts.FirstOrDefault(a => a.Customer.Id == customerId).SavingsBalance < amount)
-                    {
-                        OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Not enough funds to perform operation");
-                    }
-                    else
-                    {
-                        context.SavingsAccounts.FirstOrDefault(a => a.Customer.Id == customerId).SavingsBalance -= amount;
-                        context.CurrentAccounts.FirstOrDefault(a => a.Customer.Id == customerId).CurrentBalance += amount;
-
-                        context.SaveChanges();
-                        OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendCustomerInfo(getUpdatedInfo(customerId));
-                        OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Operation Succeded");
-                    }    
-                }
-            }
-            
-        }
-
         public void GetAllCustomers()
         {
-            OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendAllCustomers(getCustomersFromDb());
+            try
+            {
+                //OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendAllCustomers(Database.MockCustomers);
+
+                IEnumerable<CustomerInfo> customers = manageCustomerInfo.GetAllCustomers();
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendAllCustomers(customers);
+            }
+            catch (CustomerException ex)
+            {
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult(ex.Message);     
+            }
         }
 
 
-
-        private CustomerInfo getUpdatedInfo(int customerId)
+        //Operations
+        public void Deposit(int customerId, decimal amount, string toAccountType)
         {
-            CustomerInfo customerInfo = new CustomerInfo();
+            accountManager = accounts.GetAccessToTheAccount(toAccountType);
+            accountManager.Deposit(customerId, amount);
 
-            using (BankDatabaseContainer context = new BankDatabaseContainer())
-            {
-                Customer cust = context.Customers.FirstOrDefault(c => c.Id == customerId);
 
-                if (cust == null)
-                {
-                    customerInfo = null;
-                    return customerInfo;
-                }
-
-                customerInfo.Id = cust.Id;
-                customerInfo.FirstName = cust.Firstname;
-                customerInfo.LastName = cust.Lastname;
-                customerInfo.Email = cust.Email;
-                customerInfo.JoinedOnDate = cust.JoinedOnDate;
-                customerInfo.CurrentBalance = cust.CurrentAccount.CurrentBalance;
-                customerInfo.SavingsBalance = cust.SavingsAccount.SavingsBalance;
-
-            }
-
-            return customerInfo;
+            OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendCustomerInfo(manageCustomerInfo.GetUpdatedInfo(customerId));
+            OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult($"Funds were deposited to {toAccountType}");
         }
-        private IEnumerable<CustomerInfo> getCustomersFromDb()
+        public void Withdraw(int customerId, decimal amount, string fromAccountType)
         {
-            List<CustomerInfo> customerInfos = new List<CustomerInfo>();
+            accountManager = accounts.GetAccessToTheAccount(fromAccountType);
 
-            using (BankDatabaseContainer context = new BankDatabaseContainer())
+            var isEnoughFunds = accountManager.EnoughFunds(customerId, amount);
+
+            if (isEnoughFunds)
             {
-                context.Customers.AsParallel().ForAll(c =>
-                {
-                    customerInfos.Add(new CustomerInfo { Id = c.Id, FirstName = c.Firstname, LastName = c.Lastname, Email = c.Email, JoinedOnDate = c.JoinedOnDate });
-                });
-
-                context.CurrentAccounts.AsParallel().ForAll(ca => 
-                {
-                    customerInfos.FirstOrDefault(c => c.Email == ca.CustomerEmail).CurrentBalance = ca.CurrentBalance;
-                });
-
-                context.SavingsAccounts.AsParallel().ForAll(sa =>
-                {
-                    customerInfos.FirstOrDefault(c => c.Email == sa.CustomerEmail).SavingsBalance = sa.SavingsBalance;
-                });
+                accountManager.Withdraw(customerId, amount);
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendCustomerInfo(manageCustomerInfo.GetUpdatedInfo(customerId));
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult($"Funds were withdrawn from {fromAccountType}");
             }
+            else
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Not enough funds");
+        }    
+        public void InnerTransfer(int customerId, decimal amount, string fromAccountType, string toAccountType)
+        {
+            accountManager = accounts.GetAccessToTheAccount(fromAccountType);
+            
 
-            return customerInfos;
+            if (accountManager.EnoughFunds(customerId, amount))
+            {
+                accountManager.Withdraw(customerId, amount);
+                accountManager = accounts.GetAccessToTheAccount(toAccountType);
+                accountManager.Deposit(customerId, amount);
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendCustomerInfo(manageCustomerInfo.GetUpdatedInfo(customerId));
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult($"Funds were withdrawn from {fromAccountType} and deposited to {toAccountType}");
+            }
+            else
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Not enough funds");
         }
     }
 }

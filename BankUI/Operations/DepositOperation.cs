@@ -2,16 +2,16 @@
 
 namespace BankUI.Operations
 {
-    public class DepozitOperation : IOperationType
+    public class DepositOperation : IOperationType
     {
         private readonly BankCustomer_ServiceClient serviceCLient;
-        public DepozitOperation(BankCustomer_ServiceClient serviceCLient)
+        public DepositOperation(BankCustomer_ServiceClient serviceCLient)
         {
             this.serviceCLient = serviceCLient;
         }
         public void ProcessOperation(int customerId, decimal amount, string fromAccount = null, string toAccount = null)
         {
-            serviceCLient.Depozit(customerId, amount, toAccount);
+            serviceCLient.Deposit(customerId, amount, toAccount);
         }
     }
 }

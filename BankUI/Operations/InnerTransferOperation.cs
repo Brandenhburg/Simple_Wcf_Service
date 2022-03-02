@@ -10,7 +10,7 @@ namespace BankUI.Operations
 {
     public class InnerTransferOperation : IOperationType
     {
-        BankCustomer_ServiceClient serviceClient;
+        private readonly BankCustomer_ServiceClient serviceClient;
         public InnerTransferOperation(BankCustomer_ServiceClient serviceClient)
         {
             this.serviceClient = serviceClient;
