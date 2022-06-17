@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="f8eb4679-f944-4f2c-9422-314cd9ab7211" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="eea7b619-7a47-450d-adee-911fb72226be" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,13 +19,12 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://localhost:8080/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://localhost:8084/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="b7a32866-53ae-4020-8fd2-4344d69843d1" SourceId="1" SourceUrl="net.tcp://localhost:8080/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="b81b53e6-d608-4b82-a094-be1f0d653670" SourceId="1" SourceUrl="net.tcp://localhost:8080/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="b0df05f8-f988-4610-84fb-48611b0caf30" SourceId="1" SourceUrl="net.tcp://localhost:8080/mex" />
-    <MetadataFile FileName="CustomerService.xsd" MetadataType="Schema" ID="7d587efc-2193-445a-b6ec-92defa027918" SourceId="1" SourceUrl="net.tcp://localhost:8080/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="0d28f6d2-5ee6-4da8-9aad-6906d907e4a0" SourceId="1" SourceUrl="net.tcp://localhost:8084/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="c4756299-be1d-40db-bb94-da74379fdbf2" SourceId="1" SourceUrl="net.tcp://localhost:8084/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="61108f7b-a77f-41a5-bf2f-5094a1cd8adb" SourceId="1" SourceUrl="net.tcp://localhost:8084/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

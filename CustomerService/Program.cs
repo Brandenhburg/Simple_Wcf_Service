@@ -10,7 +10,9 @@ namespace CustomerService
             using (ServiceHost host = new ServiceHost(typeof(BankCustomer_Service)))
             {
                 host.Open();
-                Console.WriteLine("Service Host started");
+                Console.WriteLine(host.BaseAddresses[0].ToString());
+                //Console.WriteLine(host.BaseAddresses[1].ToString());
+                Console.WriteLine("Service Host started...");
                 
                 Console.ReadLine();
             }

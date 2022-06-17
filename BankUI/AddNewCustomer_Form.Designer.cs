@@ -1,7 +1,7 @@
 ﻿
 namespace BankUI
 {
-    partial class AddNewCustomerForm
+    partial class AddNewCustomer_Form
     {
         /// <summary>
         /// Required designer variable.

@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31727.386
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankUI", "BankUI\BankUI.csproj", "{7C12BFFC-F481-4676-8D80-6652A09381ED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerService", "CustomerService\CustomerService.csproj", "{02F983E7-6A3B-41C7-832F-301BE4E22F83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityService_Host", "SecurityService_Host\SecurityService_Host.csproj", "{1E8ABE6F-0D46-495F-AB24-A6C51B263E35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher", "Launcher\Launcher.csproj", "{0B870AE1-18D6-45B1-83D6-2D861DB9B214}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{02F983E7-6A3B-41C7-832F-301BE4E22F83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02F983E7-6A3B-41C7-832F-301BE4E22F83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02F983E7-6A3B-41C7-832F-301BE4E22F83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E8ABE6F-0D46-495F-AB24-A6C51B263E35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E8ABE6F-0D46-495F-AB24-A6C51B263E35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E8ABE6F-0D46-495F-AB24-A6C51B263E35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E8ABE6F-0D46-495F-AB24-A6C51B263E35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B870AE1-18D6-45B1-83D6-2D861DB9B214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B870AE1-18D6-45B1-83D6-2D861DB9B214}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B870AE1-18D6-45B1-83D6-2D861DB9B214}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B870AE1-18D6-45B1-83D6-2D861DB9B214}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

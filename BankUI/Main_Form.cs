@@ -7,6 +7,8 @@ using System.Drawing;
 
 using BankUI.BankCustomers;
 using BankUI.Operations;
+using System.Diagnostics;
+using System.ComponentModel;
 
 namespace BankUI
 {
@@ -16,29 +18,56 @@ namespace BankUI
         CustomerInfo customerInfo;
         CheckSelectedItems check;
 
-        InstanceContext instance;
+        InstanceContext instanceContext;
         BankCustomer_ServiceClient bankCustomer_ServiceClient;
-        public Main_Form()
+
+
+
+
+        public bool IsAuthenticated { get; private set; } = false;
+        public bool IsDataReadonly { get; private set; } = false;
+
+
+        public  Main_Form(bool isAuthenticated)
         {
+
             
-            InitializeComponent();
+            IsAuthenticated = isAuthenticated;
+
+
+            MinimumSize = new Size { Width = 800, Height = 480 };
+            MaximumSize = MinimumSize;
+
             StartPosition = FormStartPosition.CenterScreen;
 
 
-            instance = new InstanceContext(this);
-            bankCustomer_ServiceClient = new BankCustomer_ServiceClient(instance, "NetTcpBinding_IBankCustomer_Service");
+            instanceContext = new InstanceContext(this);
+            bankCustomer_ServiceClient = new BankCustomer_ServiceClient(instanceContext, "NetTcpBinding_IBankCustomer_Service");
 
             check = new CheckSelectedItems();
+
+            InitializeComponent();
+        }
+        private async void Main_Form_Load(object sender, EventArgs e)
+        {
+            while (Process.GetProcessesByName("Launcher").Length > 0)
+                await Task.Delay(1000);
+
+
+            Process.Start(new ProcessStartInfo { FileName = "cmd", Arguments = $"/c taskkill /f /im SecurityService_Host.exe", WindowStyle = ProcessWindowStyle.Hidden }).WaitForExit();
+
+            if (!IsAuthenticated)
+            {
+                button_AddNewCustomer.Enabled = false;
+            }
         }
 
 
 
         private void button_AddNewCustomer_Click(object sender, EventArgs e)
         {
-            AddNewCustomerForm newCustomerForm = new AddNewCustomerForm(this);
-            newCustomerForm.StartPosition = FormStartPosition.CenterScreen;
-
-            newCustomerForm.Show();
+            AddNewCustomer_Form newCustomerForm = new AddNewCustomer_Form(this, bankCustomer_ServiceClient);
+            newCustomerForm.ShowDialog();
         }
         private void button_RemoveCustomer_Click(object sender, EventArgs e)
         {
@@ -72,16 +101,13 @@ namespace BankUI
             catch(FormatException)
             {
                 MessageBox.Show("Incorect Id");
-            }
-            
+            }        
         }
         private void button_ViewAllCustomers_Click(object sender, EventArgs e)
         {
-            ViewAllCustomers_Form viewAllCustomers_Form = new ViewAllCustomers_Form();
-            viewAllCustomers_Form.Show();
+            ViewAllCustomers_Form viewAllCustomers_Form = new ViewAllCustomers_Form(this);
+            viewAllCustomers_Form.ShowDialog();
         }
-
-
 
 
         //ManageFunds
@@ -191,6 +217,18 @@ namespace BankUI
 
 
 
+
+
+        //ToolStrip Menu
+        private void connectToSystemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(new ProcessStartInfo { FileName = @"D:\Simple Wcf Service\Launcher\bin\Debug\Launcher.exe"});
+            Application.Exit();
+        }
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e) => Application.Exit();
+
+
+
         //Callbacks
         public void SendCustomerInfo(CustomerInfo cust)
         {
@@ -219,7 +257,6 @@ namespace BankUI
         public void SendAllCustomers(CustomerInfo[] customers)
         {
         }
-
     }
 }
     

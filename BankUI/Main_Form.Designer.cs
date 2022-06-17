@@ -56,7 +56,12 @@ namespace BankUI
             this.comboBox_fromAccountType = new System.Windows.Forms.ComboBox();
             this.comboBox_toAccountType = new System.Windows.Forms.ComboBox();
             this.button_CancelManagerFunds = new System.Windows.Forms.Button();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectToSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel_ManageFunds.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -342,6 +347,40 @@ namespace BankUI
             this.button_CancelManagerFunds.UseVisualStyleBackColor = true;
             this.button_CancelManagerFunds.Click += new System.EventHandler(this.button_CancelManagerFunds_Click);
             // 
+            // menuStrip
+            // 
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(784, 25);
+            this.menuStrip.TabIndex = 15;
+            this.menuStrip.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.connectToSystemToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(39, 21);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // connectToSystemToolStripMenuItem
+            // 
+            this.connectToSystemToolStripMenuItem.Name = "connectToSystemToolStripMenuItem";
+            this.connectToSystemToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.connectToSystemToolStripMenuItem.Text = "Logout";
+            this.connectToSystemToolStripMenuItem.Click += new System.EventHandler(this.connectToSystemToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // Main_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -363,10 +402,14 @@ namespace BankUI
             this.Controls.Add(this.textBox_CustomerId);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.menuStrip);
             this.Name = "Main_Form";
             this.Text = "Bank Manager";
+            this.Load += new System.EventHandler(this.Main_Form_Load);
             this.panel_ManageFunds.ResumeLayout(false);
             this.panel_ManageFunds.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -401,6 +444,10 @@ namespace BankUI
         private System.Windows.Forms.Label label_fromAccountType;
         private System.Windows.Forms.Label label_FundsAmount;
         private System.Windows.Forms.Button button_AcceptFundsOperation;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem connectToSystemToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 

@@ -27,7 +27,7 @@ namespace CustomerService
             try
             {
                 manageCustomerInfo.AddNewCustomer(firstName, lastName, email, createdOnDate, currentFunds, savingsFunds);
-                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("The customer was successfully created");
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Customer was successfully created");
             }
             catch (CustomerException ex)
             {
@@ -40,7 +40,7 @@ namespace CustomerService
             try
             {
                 manageCustomerInfo.DeleteCustomer(customerId);
-                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("The customer was deleted from database");
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Customer was deleted from database");
             }
             catch (CustomerException ex)
             {

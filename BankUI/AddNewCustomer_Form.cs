@@ -7,7 +7,7 @@ using BankUI.BankCustomers;
 
 namespace BankUI
 {
-    public partial class AddNewCustomerForm : Form, IBankCustomer_ServiceCallback
+    partial class AddNewCustomer_Form : Form, IBankCustomer_ServiceCallback
     {
 
         Label label_CurrentFunds;
@@ -18,21 +18,26 @@ namespace BankUI
 
 
         bool Depozit = false;
-        private readonly Main_Form mainFormInstance;
+        Main_Form mainForm;
 
-        public AddNewCustomerForm(Main_Form mainFormInstance)
+        BankCustomer_ServiceClient bankCustomer_ServiceClient;
+
+        public AddNewCustomer_Form(Main_Form mainForm, BankCustomer_ServiceClient customerInfo_ServiceClient)
         {
-            InitializeComponent();
-            Owner = mainFormInstance;
-            Owner.Enabled = false;
 
-            StartPosition = FormStartPosition.CenterParent;
+            this.mainForm = mainForm;
+            this.mainForm.Enabled = false;
+
+            StartPosition = FormStartPosition.CenterScreen;
 
             MinimumSize = new Size { Width = 636, Height = 384};
             MaximumSize = MinimumSize;
 
             
-            this.mainFormInstance = mainFormInstance;
+            bankCustomer_ServiceClient = 
+                new BankCustomer_ServiceClient(new InstanceContext(this), "NetTcpBinding_IBankCustomer_Service");
+            
+            InitializeComponent();
         }
         
         private void button_DepozitFunds_Click(object sender, EventArgs e)
@@ -83,17 +88,12 @@ namespace BankUI
                 textBox_SavingsFundsValue.Dispose();
             }       
         }
-
         private void button_CreateNewCustomer_Click(object sender, EventArgs e)
         {
             string currentDate = DateTime.Today.ToString();
 
             decimal currentAccFunds;
             decimal savingsAccFunds;
-
-
-            InstanceContext instance = new InstanceContext(this);
-            BankCustomer_ServiceClient customerInfo_ServiceClient = new BankCustomer_ServiceClient(instance, "NetTcpBinding_IBankCustomer_Service");
 
             try
             {
@@ -102,15 +102,14 @@ namespace BankUI
                     currentAccFunds = decimal.Parse(textBox_CurrentFundsValue.Text);
                     savingsAccFunds = decimal.Parse(textBox_SavingsFundsValue.Text);
 
-                    customerInfo_ServiceClient.CreateCustomer(textBox_FirstName.Text, textBox_LastName.Text, textBox_Email.Text, currentDate, currentAccFunds, savingsAccFunds);
+                    bankCustomer_ServiceClient.CreateCustomer(textBox_FirstName.Text, textBox_LastName.Text, textBox_Email.Text, currentDate, currentAccFunds, savingsAccFunds);
 
                     return;
                 }
 
-                customerInfo_ServiceClient.CreateCustomer(textBox_FirstName.Text, textBox_LastName.Text, textBox_Email.Text, currentDate, 0, 0);
-
-                //MessageBox.Show();
-                this.Close();
+                bankCustomer_ServiceClient.CreateCustomer(textBox_FirstName.Text, textBox_LastName.Text, textBox_Email.Text, currentDate, 0, 0);
+                
+                Close();
             }
             catch (FaultException ex)
             {
@@ -121,31 +120,23 @@ namespace BankUI
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void button_CancelCreateNewCustomer_Click(object sender, EventArgs e)
-        {
-            Owner.Enabled = true;
-            Close();
-        }
-
+        private void button_CancelCreateNewCustomer_Click(object sender, EventArgs e) => Close();
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            Owner.Enabled = true;
+            bankCustomer_ServiceClient.Close();
+            mainForm.Enabled = true;
         }
 
+        //CallBacks
         public void SendCustomerInfo(CustomerInfo cust)
         {
             //throw new NotImplementedException();
         }
-
         public void OperationResult(string result)
         {
             MessageBox.Show(result);
-
-            Owner.Enabled = true;
             Close();
         }
-
         public void SendAllCustomers(CustomerInfo[] customers)
         {
             throw new NotImplementedException();
