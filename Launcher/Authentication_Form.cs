@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.ServiceModel;
 using Launcher.Security;
+using System.Threading.Tasks;
 
 namespace Launcher
 {
@@ -18,23 +19,26 @@ namespace Launcher
 
             StartPosition = FormStartPosition.CenterScreen;
 
-            MinimumSize = new Size { Height = 480, Width = 400 };
-            MaximumSize = MinimumSize;
 
             securityService_client = new Security_ServiceClient("NetTcpBinding_ISecurity_Service");
 
             AcceptButton = button_Authenticate;
 
-            ShowInTaskbar = true;
 
             InitializeComponent();
 
         }
 
-        private void button_Authenticate_Click(object sender, EventArgs e)
+        private async void button_Authenticate_Click(object sender, EventArgs e)
         {
+            button_Authenticate.Enabled = false;
+            button_GetAccess.Enabled = false;
+            linkLabel_ReadOnlyMode.Enabled = false;
 
-            bool CorrenctUserCredentials = securityService_client.Login(textBox_username.Text, textBox_Password.Text);
+            bool CorrenctUserCredentials = await securityService_client.LoginAsync (textBox_username.Text, textBox_Password.Text);
+
+            
+
 
             if (!CorrenctUserCredentials)
             {
@@ -42,10 +46,19 @@ namespace Launcher
                 textBox_Password.Clear();
 
                 label_Error.Text = "Wrong username or password";
+
+                button_Authenticate.Enabled = true;
+                button_GetAccess.Enabled = true;
+                linkLabel_ReadOnlyMode.Enabled = true;
+
+
                 return;
             }
             else
             {
+                label_Error.ForeColor = Color.Green;
+                label_Error.Text = "Confirmed";
+                await Task.Delay(1500);
                 Process.Start(new ProcessStartInfo { FileName = @"D:\Simple WCF Service\BankUI\bin\Debug\BankUI.exe", Arguments = CorrenctUserCredentials.ToString()});
                 Application.Exit();
             }  

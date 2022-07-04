@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CodeeloUI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\CodeeloUI.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Syncfusion.Licensing, Version=20.1460.0.59, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
@@ -65,11 +70,35 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\Security\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Customizing\MenuStripColor.cs" />
+    <Compile Include="Launcher\Authentication_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Launcher\Authentication_Form.Designer.cs">
+      <DependentUpon>Authentication_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Launcher\SignUp_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Launcher\SignUp_Form.Designer.cs">
+      <DependentUpon>SignUp_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main_Form.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Main_Form.Designer.cs">
       <DependentUpon>Main_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menu\Tools_Options_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menu\Tools_Options_Form.Designer.cs">
+      <DependentUpon>Tools_Options_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\DepositOperation.cs" />
     <Compile Include="Operations\InnerTransferOperation.cs" />
@@ -86,8 +115,17 @@
     <EmbeddedResource Include="AddNewCustomer_Form.resx">
       <DependentUpon>AddNewCustomer_Form.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Launcher\Authentication_Form.resx">
+      <DependentUpon>Authentication_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Launcher\SignUp_Form.resx">
+      <DependentUpon>SignUp_Form.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main_Form.resx">
       <DependentUpon>Main_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu\Tools_Options_Form.resx">
+      <DependentUpon>Tools_Options_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -111,6 +149,19 @@
     <None Include="Connected Services\BankCustomers\service1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\Security\BankUI.Security.Employee.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Security\SecurityService_Host.Data.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\Security\service.wsdl" />
+    <None Include="Connected Services\Security\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\Security\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -130,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\BankCustomers\" />
+    <WCFMetadataStorage Include="Connected Services\Security\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\BankCustomers\configuration91.svcinfo" />
@@ -143,5 +195,18 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Security\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Security\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Security\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

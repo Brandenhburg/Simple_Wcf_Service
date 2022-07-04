@@ -145,6 +145,8 @@ namespace BankUI
             this.Controls.Add(this.button_ExitViewAllCustomers);
             this.Controls.Add(this.button_RefreshView);
             this.Controls.Add(this.viewAllcustomersTable);
+            this.MaximumSize = new System.Drawing.Size(730, 475);
+            this.MinimumSize = new System.Drawing.Size(730, 475);
             this.Name = "ViewAllCustomers_Form";
             this.Text = "ViewAllCustomers_Form";
             ((System.ComponentModel.ISupportInitialize)(this.viewAllcustomersTable)).EndInit();

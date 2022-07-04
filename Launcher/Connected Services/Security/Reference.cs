@@ -26,6 +26,12 @@ namespace Launcher.Security {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISecurity_Service/GetAccessToSystem", ReplyAction="http://tempuri.org/ISecurity_Service/GetAccessToSystemResponse")]
         System.Threading.Tasks.Task GetAccessToSystemAsync(string username, string email, string unhashed);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISecurity_Service/GetString", ReplyAction="http://tempuri.org/ISecurity_Service/GetStringResponse")]
+        int GetString(int number);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISecurity_Service/GetString", ReplyAction="http://tempuri.org/ISecurity_Service/GetStringResponse")]
+        System.Threading.Tasks.Task<int> GetStringAsync(int number);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -69,6 +75,14 @@ namespace Launcher.Security {
         
         public System.Threading.Tasks.Task GetAccessToSystemAsync(string username, string email, string unhashed) {
             return base.Channel.GetAccessToSystemAsync(username, email, unhashed);
+        }
+        
+        public int GetString(int number) {
+            return base.Channel.GetString(number);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetStringAsync(int number) {
+            return base.Channel.GetStringAsync(number);
         }
     }
 }

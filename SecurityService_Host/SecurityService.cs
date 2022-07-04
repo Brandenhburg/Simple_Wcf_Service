@@ -1,35 +1,24 @@
 ﻿using SecurityService_Host.Data;
+using System.Threading.Tasks;
+using System.ServiceModel;
 using System;
-using SecurityService_Host.SecurityServices;
+using System.Threading;
 
 namespace SecurityService_Host
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
     public class SecurityService : ISecurity_Service
     {
-        public void GetAccessToSystem(string username, string email, string unhashed) => WorkersMockDatabase.AddNewWorker(username, email, unhashed);
+        public async Task<bool> SignUp(string username, string email, string password) =>
+                await Task.Factory.StartNew(() => EmployeesMockDatabase.IsNewEmployeeCreated(username, email, password));
 
-        public bool Login(string userName, string password)
+        public async Task<Employee> SignIn(string userName, string password)
         {
-            if (WorkersMockDatabase.Workers.Exists(w => w.Username == userName))
-                return SecurityManager.CheckUsersPassword(userName, password);
-
-            return false;
-        }
-
-
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
-        {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
-        }
-
+            Employee worker = await Task.Factory.StartNew(() => EmployeesMockDatabase.GetEployee(userName, password));
+            if (worker == null)
+                throw new FaultException("Wrong Username or Password");
+            else
+                return worker;
+        }    
     }
 }

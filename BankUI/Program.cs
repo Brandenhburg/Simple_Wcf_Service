@@ -16,17 +16,17 @@ namespace BankUI
 
         private static Mutex instance;
         private const string appName = "Bank Service";
-        static bool isAuthenticated = false;
+        //static bool isAuthenticated = false;
 
         [STAThread]
         static void Main(string[] args)
         {
 
             // To run BankUI.exe without Launcher  comment section below, or start BankUi.exe from Command Promt with "true" argument
-            isAuthenticated = Convert.ToBoolean(args[0]);
+            //isAuthenticated = Convert.ToBoolean(args[0]);
 
-            if (!isAuthenticated)
-                return;
+            //if (!isAuthenticated)
+            //    return;
             //--------------------------------------------------
 
             bool tryCreateNewApp;
@@ -35,13 +35,13 @@ namespace BankUI
             if (tryCreateNewApp)
             {
                                                                             //Write your path--------------------------------------------
-                Process.Start(new ProcessStartInfo { FileName = @"D:\Simple WCF Service\CustomerService\bin\Debug\CustomerService.exe", WindowStyle = ProcessWindowStyle.Hidden});
+                //Process.Start(new ProcessStartInfo { FileName = @"D:\Simple WCF Service\CustomerService\bin\Debug\CustomerService.exe", WindowStyle = ProcessWindowStyle.Hidden});
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Main_Form(isAuthenticated));
+                Application.Run(new Main_Form());
 
-                Process.Start(new ProcessStartInfo { FileName = "cmd", Arguments = $"/c taskkill /f /im CustomerService.exe", WindowStyle = ProcessWindowStyle.Hidden }).WaitForExit();
+                //Process.Start(new ProcessStartInfo { FileName = "cmd", Arguments = $"/c taskkill /f /im CustomerService.exe", WindowStyle = ProcessWindowStyle.Hidden }).WaitForExit();
             }
         } 
     }

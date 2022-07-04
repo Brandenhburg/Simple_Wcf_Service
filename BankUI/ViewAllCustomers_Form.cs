@@ -13,11 +13,10 @@ namespace BankUI
         Main_Form mainForm;
         public ViewAllCustomers_Form(Main_Form mainForm)
         {
-            this.mainForm = mainForm;
-            MinimumSize = new Size { Height = 475, Width = 730 };
-            MaximumSize = MinimumSize;
 
             StartPosition = FormStartPosition.CenterScreen;
+
+            this.mainForm = mainForm;
 
 
             bankCustomer_ServiceClient = 

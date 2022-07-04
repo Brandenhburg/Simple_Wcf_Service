@@ -43,46 +43,37 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/SecurityService_Host.Data" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="ISecurity_Service_Login_InputMessage">
-    <wsdl:part name="parameters" element="tns:Login" />
+  <wsdl:message name="ISecurity_Service_SignIn_InputMessage">
+    <wsdl:part name="parameters" element="tns:SignIn" />
   </wsdl:message>
-  <wsdl:message name="ISecurity_Service_Login_OutputMessage">
-    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  <wsdl:message name="ISecurity_Service_SignIn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SignInResponse" />
   </wsdl:message>
-  <wsdl:message name="ISecurity_Service_GetAccessToSystem_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetAccessToSystem" />
+  <wsdl:message name="ISecurity_Service_SignUp_InputMessage">
+    <wsdl:part name="parameters" element="tns:SignUp" />
   </wsdl:message>
-  <wsdl:message name="ISecurity_Service_GetAccessToSystem_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetAccessToSystemResponse" />
-  </wsdl:message>
-  <wsdl:message name="ISecurity_Service_GetString_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetString" />
-  </wsdl:message>
-  <wsdl:message name="ISecurity_Service_GetString_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetStringResponse" />
+  <wsdl:message name="ISecurity_Service_SignUp_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SignUpResponse" />
   </wsdl:message>
   <wsdl:portType name="ISecurity_Service">
-    <wsdl:operation name="Login">
-      <wsdl:input wsaw:Action="http://tempuri.org/ISecurity_Service/Login" message="tns:ISecurity_Service_Login_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ISecurity_Service/LoginResponse" message="tns:ISecurity_Service_Login_OutputMessage" />
+    <wsdl:operation name="SignIn">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISecurity_Service/SignIn" message="tns:ISecurity_Service_SignIn_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISecurity_Service/SignInResponse" message="tns:ISecurity_Service_SignIn_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetAccessToSystem">
-      <wsdl:input wsaw:Action="http://tempuri.org/ISecurity_Service/GetAccessToSystem" message="tns:ISecurity_Service_GetAccessToSystem_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ISecurity_Service/GetAccessToSystemResponse" message="tns:ISecurity_Service_GetAccessToSystem_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetString">
-      <wsdl:input wsaw:Action="http://tempuri.org/ISecurity_Service/GetString" message="tns:ISecurity_Service_GetString_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ISecurity_Service/GetStringResponse" message="tns:ISecurity_Service_GetString_OutputMessage" />
+    <wsdl:operation name="SignUp">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISecurity_Service/SignUp" message="tns:ISecurity_Service_SignUp_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISecurity_Service/SignUpResponse" message="tns:ISecurity_Service_SignUp_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_ISecurity_Service" type="tns:ISecurity_Service">
     <wsp:PolicyReference URI="#NetTcpBinding_ISecurity_Service_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="Login">
-      <soap12:operation soapAction="http://tempuri.org/ISecurity_Service/Login" style="document" />
+    <wsdl:operation name="SignIn">
+      <soap12:operation soapAction="http://tempuri.org/ISecurity_Service/SignIn" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -90,17 +81,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetAccessToSystem">
-      <soap12:operation soapAction="http://tempuri.org/ISecurity_Service/GetAccessToSystem" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetString">
-      <soap12:operation soapAction="http://tempuri.org/ISecurity_Service/GetString" style="document" />
+    <wsdl:operation name="SignUp">
+      <soap12:operation soapAction="http://tempuri.org/ISecurity_Service/SignUp" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

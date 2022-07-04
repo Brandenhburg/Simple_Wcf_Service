@@ -14,13 +14,14 @@ namespace SecurityService_Host
 
             using (ServiceHost host = new ServiceHost(typeof(SecurityService)))
             {
-                WorkersMockDatabase.AddNewWorker( "user",  "user" , "user");
+                EmployeesMockDatabase.AddDefaultEmployee();
+
+
                 host.Open();
                 Console.WriteLine(host.BaseAddresses[0].ToString()); 
                 Console.WriteLine("Service Host started");
                 Console.ReadLine();
             }
-
         }
     }
 }

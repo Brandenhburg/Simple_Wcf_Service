@@ -7,13 +7,15 @@ using System.Drawing;
 
 using BankUI.BankCustomers;
 using BankUI.Operations;
-using System.Diagnostics;
-using System.ComponentModel;
+using BankUI.Security;
+using BankUI.Launcher;
+using BankUI.Menu;
 
 namespace BankUI
 {
     public partial class Main_Form : Form, IBankCustomer_ServiceCallback
     {
+        #region [Fields]
         IOperationType operationType;
         CustomerInfo customerInfo;
         CheckSelectedItems check;
@@ -21,25 +23,14 @@ namespace BankUI
         InstanceContext instanceContext;
         BankCustomer_ServiceClient bankCustomer_ServiceClient;
 
+        
+        internal Employee currentEmployee;
+        #endregion
 
-
-
-        public bool IsAuthenticated { get; private set; } = false;
-        public bool IsDataReadonly { get; private set; } = false;
-
-
-        public  Main_Form(bool isAuthenticated)
+        #region [Constructor]
+        public Main_Form()
         {
-
-            
-            IsAuthenticated = isAuthenticated;
-
-
-            MinimumSize = new Size { Width = 800, Height = 480 };
-            MaximumSize = MinimumSize;
-
             StartPosition = FormStartPosition.CenterScreen;
-
 
             instanceContext = new InstanceContext(this);
             bankCustomer_ServiceClient = new BankCustomer_ServiceClient(instanceContext, "NetTcpBinding_IBankCustomer_Service");
@@ -48,21 +39,20 @@ namespace BankUI
 
             InitializeComponent();
         }
-        private async void Main_Form_Load(object sender, EventArgs e)
+        #endregion
+
+
+        #region[Properties]
+        internal bool IsAuthenticated { get; set; } = false;
+        internal bool IsDataReadonly { get; set; } = false;
+        #endregion
+
+        private void Main_Form_Load(object sender, EventArgs e)
         {
-            while (Process.GetProcessesByName("Launcher").Length > 0)
-                await Task.Delay(1000);
-
-
-            Process.Start(new ProcessStartInfo { FileName = "cmd", Arguments = $"/c taskkill /f /im SecurityService_Host.exe", WindowStyle = ProcessWindowStyle.Hidden }).WaitForExit();
-
-            if (!IsAuthenticated)
-            {
-                button_AddNewCustomer.Enabled = false;
-            }
+            Enabled = false;
+            Authentication_Form authForm = new Authentication_Form(this);
+            authForm.ShowDialog();           
         }
-
-
 
         private void button_AddNewCustomer_Click(object sender, EventArgs e)
         {
@@ -110,14 +100,15 @@ namespace BankUI
         }
 
 
-        //ManageFunds
+
+        #region [ManageFunds]
         private async void button_ManageFunds_Click(object sender, EventArgs e)
         {
             
             while (panel_ManageFunds.Location.X > this.Size.Width / 2)
             {
                 await Task.Delay(1);
-                panel_ManageFunds.Location = new Point (panel_ManageFunds.Location.X - 20, 0 );
+                panel_ManageFunds.Location = new Point (panel_ManageFunds.Location.X - 20, 25 );
             }
 
             button_SearchCustomer.Enabled = false;
@@ -198,7 +189,7 @@ namespace BankUI
                 operationType = null;
 
                 await Task.Delay(1);
-                panel_ManageFunds.Location = new Point (panel_ManageFunds.Location.X + 20,  0 );
+                panel_ManageFunds.Location = new Point (panel_ManageFunds.Location.X + 20,  25 );
             }
 
             button_SearchCustomer.Enabled = true;
@@ -214,22 +205,30 @@ namespace BankUI
             comboBox_toAccountType.Enabled = false;
             comboBox_toAccountType.Text = "Select Account";
         }
+        #endregion
 
 
+        #region [MenuStrip]
 
-
-
-        //ToolStrip Menu
-        private void connectToSystemToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem_SignOut_Click(object sender, EventArgs e)
         {
-            Process.Start(new ProcessStartInfo { FileName = @"D:\Simple Wcf Service\Launcher\bin\Debug\Launcher.exe"});
-            Application.Exit();
+            Hide();
+            Enabled = false;
+            currentEmployee = null;
+            Authentication_Form authentication_Form = new Authentication_Form(this);
+            authentication_Form.ShowDialog();
         }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) => Application.Exit();
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tools_Options_Form tools_Options_Form = Tools_Options_Form.GetForm();
+            tools_Options_Form.Show();
+        }
+        #endregion
 
 
-
-        //Callbacks
+        #region [WCF_CallBacks]
         public void SendCustomerInfo(CustomerInfo cust)
         {
             try
@@ -257,6 +256,9 @@ namespace BankUI
         public void SendAllCustomers(CustomerInfo[] customers)
         {
         }
+        #endregion
+
+
     }
 }
     

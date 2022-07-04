@@ -25,23 +25,23 @@ namespace BankUI
 
         /// <summary>
         /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// the contents of this method with the code editor.       
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.button_SearchCustomer = new System.Windows.Forms.Button();
+            this.label_CustomerId = new System.Windows.Forms.Label();
             this.textBox_CustomerId = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label_Firstname = new System.Windows.Forms.Label();
             this.textBox_Firstname_MainForm = new System.Windows.Forms.TextBox();
             this.textBox_CustomerLastName_MainForm = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.label_Lastname = new System.Windows.Forms.Label();
             this.textBox_CurrentBalance_MainForm = new System.Windows.Forms.TextBox();
             this.textBox_SavingsBalance_MainForm = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.label_CurrentBalance = new System.Windows.Forms.Label();
+            this.label_SavingsBalance = new System.Windows.Forms.Label();
             this.button_AddNewCustomer = new System.Windows.Forms.Button();
             this.button_RemoveCustomer = new System.Windows.Forms.Button();
-            this.button_SearchCustomer = new System.Windows.Forms.Button();
             this.button_ViewAllCustomers = new System.Windows.Forms.Button();
             this.button_ManageFunds = new System.Windows.Forms.Button();
             this.panel_ManageFunds = new System.Windows.Forms.Panel();
@@ -58,21 +58,23 @@ namespace BankUI
             this.button_CancelManagerFunds = new System.Windows.Forms.Button();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.connectToSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_SignOut = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel_ManageFunds.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // label_CustomerId
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(33, 93);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Customer ID";
+            this.label_CustomerId.AutoSize = true;
+            this.label_CustomerId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_CustomerId.Location = new System.Drawing.Point(33, 93);
+            this.label_CustomerId.Name = "label_CustomerId";
+            this.label_CustomerId.Size = new System.Drawing.Size(75, 15);
+            this.label_CustomerId.TabIndex = 0;
+            this.label_CustomerId.Text = "Customer ID";
             // 
             // textBox_CustomerId
             // 
@@ -81,15 +83,15 @@ namespace BankUI
             this.textBox_CustomerId.Size = new System.Drawing.Size(100, 20);
             this.textBox_CustomerId.TabIndex = 1;
             // 
-            // label2
+            // label_Firstname
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(33, 152);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 15);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Firstname";
+            this.label_Firstname.AutoSize = true;
+            this.label_Firstname.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Firstname.Location = new System.Drawing.Point(33, 152);
+            this.label_Firstname.Name = "label_Firstname";
+            this.label_Firstname.Size = new System.Drawing.Size(62, 15);
+            this.label_Firstname.TabIndex = 0;
+            this.label_Firstname.Text = "Firstname";
             // 
             // textBox_Firstname_MainForm
             // 
@@ -107,15 +109,15 @@ namespace BankUI
             this.textBox_CustomerLastName_MainForm.Size = new System.Drawing.Size(100, 20);
             this.textBox_CustomerLastName_MainForm.TabIndex = 3;
             // 
-            // label3
+            // label_Lastname
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(33, 209);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 15);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Lastname";
+            this.label_Lastname.AutoSize = true;
+            this.label_Lastname.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Lastname.Location = new System.Drawing.Point(33, 209);
+            this.label_Lastname.Name = "label_Lastname";
+            this.label_Lastname.Size = new System.Drawing.Size(62, 15);
+            this.label_Lastname.TabIndex = 4;
+            this.label_Lastname.Text = "Lastname";
             // 
             // textBox_CurrentBalance_MainForm
             // 
@@ -133,25 +135,25 @@ namespace BankUI
             this.textBox_SavingsBalance_MainForm.Size = new System.Drawing.Size(100, 20);
             this.textBox_SavingsBalance_MainForm.TabIndex = 6;
             // 
-            // label4
+            // label_CurrentBalance
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(33, 260);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(95, 15);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Current Balance";
+            this.label_CurrentBalance.AutoSize = true;
+            this.label_CurrentBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_CurrentBalance.Location = new System.Drawing.Point(33, 260);
+            this.label_CurrentBalance.Name = "label_CurrentBalance";
+            this.label_CurrentBalance.Size = new System.Drawing.Size(95, 15);
+            this.label_CurrentBalance.TabIndex = 7;
+            this.label_CurrentBalance.Text = "Current Balance";
             // 
-            // label5
+            // label_SavingsBalance
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(33, 312);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(98, 15);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Savings Balance";
+            this.label_SavingsBalance.AutoSize = true;
+            this.label_SavingsBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_SavingsBalance.Location = new System.Drawing.Point(33, 312);
+            this.label_SavingsBalance.Name = "label_SavingsBalance";
+            this.label_SavingsBalance.Size = new System.Drawing.Size(98, 15);
+            this.label_SavingsBalance.TabIndex = 8;
+            this.label_SavingsBalance.Text = "Savings Balance";
             // 
             // button_AddNewCustomer
             // 
@@ -224,9 +226,9 @@ namespace BankUI
             this.panel_ManageFunds.Controls.Add(this.comboBox_fromAccountType);
             this.panel_ManageFunds.Controls.Add(this.comboBox_toAccountType);
             this.panel_ManageFunds.Controls.Add(this.button_CancelManagerFunds);
-            this.panel_ManageFunds.Location = new System.Drawing.Point(780, 0);
+            this.panel_ManageFunds.Location = new System.Drawing.Point(780, 25);
             this.panel_ManageFunds.Name = "panel_ManageFunds";
-            this.panel_ManageFunds.Size = new System.Drawing.Size(400, 440);
+            this.panel_ManageFunds.Size = new System.Drawing.Size(400, 415);
             this.panel_ManageFunds.TabIndex = 14;
             // 
             // label_toAccountType
@@ -349,8 +351,10 @@ namespace BankUI
             // 
             // menuStrip
             // 
+            this.menuStrip.BackColor = System.Drawing.SystemColors.Window;
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.toolsToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(784, 25);
@@ -360,48 +364,68 @@ namespace BankUI
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.connectToSystemToolStripMenuItem,
-            this.exitToolStripMenuItem});
+            this.ToolStripMenuItem_SignOut,
+            this.ToolStripMenuItem_Exit});
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.WindowText;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(39, 21);
+            this.fileToolStripMenuItem.Padding = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(43, 21);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // connectToSystemToolStripMenuItem
+            // ToolStripMenuItem_SignOut
             // 
-            this.connectToSystemToolStripMenuItem.Name = "connectToSystemToolStripMenuItem";
-            this.connectToSystemToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.connectToSystemToolStripMenuItem.Text = "Logout";
-            this.connectToSystemToolStripMenuItem.Click += new System.EventHandler(this.connectToSystemToolStripMenuItem_Click);
+            this.ToolStripMenuItem_SignOut.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ToolStripMenuItem_SignOut.Name = "ToolStripMenuItem_SignOut";
+            this.ToolStripMenuItem_SignOut.Size = new System.Drawing.Size(126, 22);
+            this.ToolStripMenuItem_SignOut.Text = "Sign Out";
+            this.ToolStripMenuItem_SignOut.Click += new System.EventHandler(this.ToolStripMenuItem_SignOut_Click);
             // 
-            // exitToolStripMenuItem
+            // ToolStripMenuItem_Exit
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.ToolStripMenuItem_Exit.Name = "ToolStripMenuItem_Exit";
+            this.ToolStripMenuItem_Exit.Size = new System.Drawing.Size(126, 22);
+            this.ToolStripMenuItem_Exit.Text = "Exit";
+            this.ToolStripMenuItem_Exit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.ToolStripMenuItem_Exit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem});
+            this.toolsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 21);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // Main_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 441);
-            this.Controls.Add(this.panel_ManageFunds);
-            this.Controls.Add(this.button_ManageFunds);
-            this.Controls.Add(this.button_ViewAllCustomers);
             this.Controls.Add(this.button_SearchCustomer);
-            this.Controls.Add(this.button_RemoveCustomer);
-            this.Controls.Add(this.button_AddNewCustomer);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox_SavingsBalance_MainForm);
-            this.Controls.Add(this.textBox_CurrentBalance_MainForm);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox_CustomerLastName_MainForm);
-            this.Controls.Add(this.textBox_Firstname_MainForm);
+            this.Controls.Add(this.label_CustomerId);
+            this.Controls.Add(this.panel_ManageFunds);
             this.Controls.Add(this.textBox_CustomerId);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.button_AddNewCustomer);
+            this.Controls.Add(this.button_ViewAllCustomers);
+            this.Controls.Add(this.button_RemoveCustomer);
+            this.Controls.Add(this.button_ManageFunds);
+            this.Controls.Add(this.label_CurrentBalance);
+            this.Controls.Add(this.textBox_CurrentBalance_MainForm);
+            this.Controls.Add(this.label_SavingsBalance);
+            this.Controls.Add(this.textBox_SavingsBalance_MainForm);
+            this.Controls.Add(this.label_Firstname);
+            this.Controls.Add(this.textBox_Firstname_MainForm);
+            this.Controls.Add(this.label_Lastname);
+            this.Controls.Add(this.textBox_CustomerLastName_MainForm);
             this.Controls.Add(this.menuStrip);
             this.Name = "Main_Form";
             this.Text = "Bank Manager";
@@ -417,16 +441,16 @@ namespace BankUI
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label_CustomerId;
         private System.Windows.Forms.TextBox textBox_CustomerId;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label_Firstname;
         private System.Windows.Forms.TextBox textBox_Firstname_MainForm;
         private System.Windows.Forms.TextBox textBox_CustomerLastName_MainForm;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label_Lastname;
         private System.Windows.Forms.TextBox textBox_CurrentBalance_MainForm;
         private System.Windows.Forms.TextBox textBox_SavingsBalance_MainForm;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label_CurrentBalance;
+        private System.Windows.Forms.Label label_SavingsBalance;
         private System.Windows.Forms.Button button_AddNewCustomer;
         private System.Windows.Forms.Button button_RemoveCustomer;
         private System.Windows.Forms.Button button_SearchCustomer;
@@ -446,8 +470,10 @@ namespace BankUI
         private System.Windows.Forms.Button button_AcceptFundsOperation;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem connectToSystemToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_SignOut;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Exit;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
     }
 }
 

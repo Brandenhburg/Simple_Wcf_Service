@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace SecurityService_Host.Data
 {
     [DataContract]
-    public class Worker
+    public class Employee
     {
         [DataMember]
         public Guid Id { get; set; }
@@ -14,5 +14,7 @@ namespace SecurityService_Host.Data
         public string EMail { get; set; }
         [DataMember]
         public string Password { get; set; }
+        [DataMember]
+        public EmployeeAccType AccountType{ get; set; }
     }
 }

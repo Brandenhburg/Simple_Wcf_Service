@@ -28,7 +28,7 @@ namespace Launcher
             if (tryCreateNewApp)
             {
                                                                             //Write your path--------------------------------------------
-                Process.Start(new ProcessStartInfo { FileName = @"D:\Simple Wcf Service\SecurityService_Host\bin\Debug\SecurityService_Host.exe", WindowStyle  = ProcessWindowStyle.Hidden});
+                //Process.Start(new ProcessStartInfo { FileName = @"D:\Simple Wcf Service\SecurityService_Host\bin\Debug\SecurityService_Host.exe", WindowStyle  = ProcessWindowStyle.Hidden});
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);

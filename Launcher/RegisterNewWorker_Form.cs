@@ -102,9 +102,7 @@ namespace Launcher
                     isEmpty = true;
                 }
                 else
-                {
                     item.Key.ForeColor = Color.Black;
-                }
             }
 
             return isEmpty;
