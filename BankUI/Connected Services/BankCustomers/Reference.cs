@@ -155,7 +155,7 @@ namespace BankUI.BankCustomers {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BankCustomers.IBankCustomer_Service", CallbackContract=typeof(BankUI.BankCustomers.IBankCustomer_ServiceCallback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BankCustomers.IBankCustomer_Service", CallbackContract=typeof(BankUI.BankCustomers.IBankCustomer_ServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface IBankCustomer_Service {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBankCustomer_Service/CreateCustomer")]
@@ -199,6 +199,12 @@ namespace BankUI.BankCustomers {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBankCustomer_Service/GetAllCustomers")]
         System.Threading.Tasks.Task GetAllCustomersAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBankCustomer_Service/FilterCustomers")]
+        void FilterCustomers(string column, string substringValue);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IBankCustomer_Service/FilterCustomers")]
+        System.Threading.Tasks.Task FilterCustomersAsync(string column, string substringValue);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -296,6 +302,14 @@ namespace BankUI.BankCustomers {
         
         public System.Threading.Tasks.Task GetAllCustomersAsync() {
             return base.Channel.GetAllCustomersAsync();
+        }
+        
+        public void FilterCustomers(string column, string substringValue) {
+            base.Channel.FilterCustomers(column, substringValue);
+        }
+        
+        public System.Threading.Tasks.Task FilterCustomersAsync(string column, string substringValue) {
+            return base.Channel.FilterCustomersAsync(column, substringValue);
         }
     }
 }

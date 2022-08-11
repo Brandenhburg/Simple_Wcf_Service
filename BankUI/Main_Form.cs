@@ -4,27 +4,35 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 
-
 using BankUI.BankCustomers;
 using BankUI.Operations;
 using BankUI.Security;
 using BankUI.Launcher;
 using BankUI.Menu;
+using BankUI.Customizing;
 
 namespace BankUI
 {
     public partial class Main_Form : Form, IBankCustomer_ServiceCallback
     {
+
         #region [Fields]
         IOperationType operationType;
         CustomerInfo customerInfo;
         CheckSelectedItems check;
 
-        InstanceContext instanceContext;
-        BankCustomer_ServiceClient bankCustomer_ServiceClient;
+        internal InstanceContext instanceContext;
+        internal BankCustomer_ServiceClient bankCustomer_ServiceClient;
+        Security_ServiceClient security_ServiceClient;
 
         
-        internal Employee currentEmployee;
+        //bool isEmployeeAccSettingsPanelOpen = false;
+        Point mouseDiffPosition;
+        bool isMouseDown = false;
+
+        
+
+        internal Employee signedInEmployee;
         #endregion
 
         #region [Constructor]
@@ -32,33 +40,68 @@ namespace BankUI
         {
             StartPosition = FormStartPosition.CenterScreen;
 
+            check = new CheckSelectedItems();
+
             instanceContext = new InstanceContext(this);
             bankCustomer_ServiceClient = new BankCustomer_ServiceClient(instanceContext, "NetTcpBinding_IBankCustomer_Service");
 
-            check = new CheckSelectedItems();
 
             InitializeComponent();
+            initialize();
         }
         #endregion
 
-
         #region[Properties]
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams handleParams = base.CreateParams;
+                handleParams.ExStyle |= 0x02000000;
+                return handleParams;
+            }
+        }
+
+        internal Security_ServiceClient Security_ServiceClient 
+        {
+            get
+            {
+                if (security_ServiceClient.State == CommunicationState.Faulted)
+                {
+                    security_ServiceClient.Abort();
+                    security_ServiceClient = new Security_ServiceClient("NetTcpBinding_ISecurity_Service");
+                }            
+                return security_ServiceClient;
+            }
+            set { security_ServiceClient = value; }           
+        }
+        internal MyTittleButton EmployeeAccSettings { get => myTitleButton_EmployeeAccSettings; }
         internal bool IsAuthenticated { get; set; } = false;
         internal bool IsDataReadonly { get; set; } = false;
         #endregion
 
-        private void Main_Form_Load(object sender, EventArgs e)
+
+        private void initialize()
         {
+            SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+        }
+
+        private void Main_Form_Load(object sender, EventArgs e)
+        {           
             Enabled = false;
             Authentication_Form authForm = new Authentication_Form(this);
-            authForm.ShowDialog();           
+            authForm.ShowDialog(this); 
         }
 
         private void button_AddNewCustomer_Click(object sender, EventArgs e)
         {
             AddNewCustomer_Form newCustomerForm = new AddNewCustomer_Form(this, bankCustomer_ServiceClient);
-            newCustomerForm.ShowDialog();
-        }
+            Hide();
+            newCustomerForm.ShowDialog();           
+        }   
         private void button_RemoveCustomer_Click(object sender, EventArgs e)
         {
             try
@@ -66,7 +109,6 @@ namespace BankUI
                 bankCustomer_ServiceClient.DeleteCustomer(customerInfo.Id);
 
                 customerInfo = null;
-
 
 
                 textBox_Firstname_MainForm.Text = "";
@@ -80,34 +122,33 @@ namespace BankUI
                 MessageBox.Show("Select Customer to delete");
             }
         }
-        private void button_SearchCustomer_Click(object sender, EventArgs e)
+        private async void button_SearchCustomer_Click(object sender, EventArgs e)
         {
             try
             {
                 int customerId = int.Parse(textBox_CustomerId.Text);
 
-                bankCustomer_ServiceClient.GetCustomerInfo(customerId);
+                await bankCustomer_ServiceClient.GetCustomerInfoAsync(customerId);
             }
             catch(FormatException)
             {
                 MessageBox.Show("Incorect Id");
             }        
         }
-        private void button_ViewAllCustomers_Click(object sender, EventArgs e)
+        private void button_ViewCustomers_Click(object sender, EventArgs e)
         {
-            ViewAllCustomers_Form viewAllCustomers_Form = new ViewAllCustomers_Form(this);
+            ViewCustomers_Form viewAllCustomers_Form = new ViewCustomers_Form(this);
             viewAllCustomers_Form.ShowDialog();
         }
-
 
 
         #region [ManageFunds]
         private async void button_ManageFunds_Click(object sender, EventArgs e)
         {
-            
             while (panel_ManageFunds.Location.X > this.Size.Width / 2)
-            {
+            {          
                 await Task.Delay(1);
+                panel_ManageFunds.Refresh();
                 panel_ManageFunds.Location = new Point (panel_ManageFunds.Location.X - 20, 25 );
             }
 
@@ -117,7 +158,6 @@ namespace BankUI
         private void button_Depozit_Click(object sender, EventArgs e)
         {
             operationType = new DepositOperation(bankCustomer_ServiceClient);
-
 
             comboBox_fromAccountType.SelectedIndex = -1;
             comboBox_fromAccountType.Enabled = false;
@@ -209,21 +249,53 @@ namespace BankUI
 
 
         #region [MenuStrip]
-
         private void ToolStripMenuItem_SignOut_Click(object sender, EventArgs e)
         {
-            Hide();
-            Enabled = false;
-            currentEmployee = null;
-            Authentication_Form authentication_Form = new Authentication_Form(this);
-            authentication_Form.ShowDialog();
-        }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e) => Application.Exit();
+            try
+            {
+                Hide();
+                Enabled = false;
+                bankCustomer_ServiceClient.Close();
+            }
+            catch (FaultException)
+            {
+                Hide();
+                Enabled = false;
+                bankCustomer_ServiceClient.Abort();
+            }
+            
+  
+            security_ServiceClient.SignOutAsync(signedInEmployee.Id.ToString(), signedInEmployee.Username);
+
+            signedInEmployee = null;
+
+            Authentication_Form authentication_Form = new Authentication_Form(this);
+            authentication_Form.ShowDialog(this);
+        }
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {               
+                security_ServiceClient.SignOutAsync(signedInEmployee.Id.ToString(), signedInEmployee.Username);
+
+                security_ServiceClient.Close();
+                bankCustomer_ServiceClient.Close();
+
+                Application.Exit();
+            }
+            catch (FaultException)
+            {
+                security_ServiceClient.Abort();
+                bankCustomer_ServiceClient.Abort();
+
+                Application.Exit();
+            }     
+        }
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Tools_Options_Form tools_Options_Form = Tools_Options_Form.GetForm();
-            tools_Options_Form.Show();
+            Tools_Options_Form tools_Options_Form = Tools_Options_Form.GetForm(this);
+            tools_Options_Form.ShowDialog(this);
         }
         #endregion
 
@@ -256,8 +328,58 @@ namespace BankUI
         public void SendAllCustomers(CustomerInfo[] customers)
         {
         }
+
+
+
         #endregion
 
+
+        #region [Title Bar]
+        private async void myTitleButton_ExitApp_Click(object sender, EventArgs e)
+        {
+            await Security_ServiceClient.SignOutAsync(signedInEmployee.Id.ToString(), signedInEmployee.Username);
+            security_ServiceClient.Close();
+          
+            Application.Exit();
+        }
+
+        private async void myTitleButton_Minimize_Click(object sender, EventArgs e)
+        {
+            while (Opacity > .80)
+            {
+                await Task.Delay(1);
+                Opacity -= .04;
+            }
+            WindowState = FormWindowState.Minimized;
+        }
+
+        private void Main_Form_Activated(object sender, EventArgs e) => Opacity = 1.00;
+
+        private void myTitleButton_EmployeeAccSettings_Click(object sender, EventArgs e)
+        {
+            //myTitleButton_EmployeeAccSettings.FlatAppearance.MouseOverBackColor = SystemColors.ActiveBorder;           
+        }
+        #endregion
+
+
+        #region [MoveFormEvents]
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            mouseDiffPosition.X =  Cursor.Position.X - Left;
+            mouseDiffPosition.Y = Cursor.Position.Y - Top;
+
+            isMouseDown = true;
+        }
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (isMouseDown)
+            {
+                Left = Cursor.Position.X - mouseDiffPosition.X;
+                Top = Cursor.Position.Y - mouseDiffPosition.Y;
+            }
+        }
+        protected override void OnMouseUp(MouseEventArgs e) => isMouseDown = false;
+        #endregion
 
     }
 }

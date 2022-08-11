@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using CustomerService;
 using CustomerService.Exceptions;
 
 namespace CustomerService.Data
@@ -10,6 +8,7 @@ namespace CustomerService.Data
     {
         public CustomerInfo GetUpdatedInfo(int id)
         {
+            
             CustomerInfo customerInfo = new CustomerInfo();
             using (BankDatabaseContainer context = new BankDatabaseContainer())
             {
@@ -32,31 +31,51 @@ namespace CustomerService.Data
             }
             return customerInfo;
         }
-        public IEnumerable<CustomerInfo> GetAllCustomers()
+        public List<CustomerInfo> GetAllCustomers()
         {
             List<CustomerInfo> allCustomers = new List<CustomerInfo>();
 
             using (BankDatabaseContainer context = new BankDatabaseContainer())
             {
-                if (context.Customers.Count() > 0)
+
+                var result = context.spBankDatabase_FilterCustomers("Firstname", "");
+
+
+                foreach (var item in result)
                 {
-                    context.Customers.AsParallel().ForAll(c =>
+                    allCustomers.Add(new CustomerInfo
                     {
-                        allCustomers.Add(new CustomerInfo { Id = c.Id, FirstName = c.Firstname, LastName = c.Lastname, Email = c.Email, JoinedOnDate = c.JoinedOnDate });
-                    });
-
-                    context.CurrentAccounts.AsParallel().ForAll(ca =>
-                    {
-                        allCustomers.FirstOrDefault(c => c.Email == ca.CustomerEmail).CurrentBalance = ca.CurrentBalance;
-                    });
-
-                    context.SavingsAccounts.AsParallel().ForAll(sa =>
-                    {
-                        allCustomers.FirstOrDefault(c => c.Email == sa.CustomerEmail).SavingsBalance = sa.SavingsBalance;
+                        Id = item.Id,
+                        FirstName = item.Firstname,
+                        LastName = item.Lastname,
+                        Email = item.Email,
+                        JoinedOnDate = item.JoinedOnDate,
+                        CurrentBalance = item.CurrentBalance,
+                        SavingsBalance = item.SavingsBalance,
                     });
                 }
-                else
-                    throw new CustomerException("No registerd customers");
+
+                ////if (context.Customers.Count() > 0)
+                ////{
+                ////    context.Customers.AsParallel().ForAll(c =>
+                ////    {
+                ////        allCustomers.Add(new CustomerInfo { Id = c.Id, FirstName = c.Firstname, LastName = c.Lastname, Email = c.Email, JoinedOnDate = c.JoinedOnDate });
+                ////    });
+
+                ////    context.CurrentAccounts.AsParallel().ForAll(ca =>
+                ////    {
+                ////        allCustomers.FirstOrDefault(c => c.Email == ca.CustomerEmail).CurrentBalance = ca.CurrentBalance;
+                ////    });
+
+                ////    context.SavingsAccounts.AsParallel().ForAll(sa =>
+                ////    {
+                ////        allCustomers.FirstOrDefault(c => c.Email == sa.CustomerEmail).SavingsBalance = sa.SavingsBalance;
+                ////    });
+                ////}
+
+
+                //else
+                //    throw new CustomerException("No registerd customers");
             }
             return allCustomers;
         }
@@ -83,5 +102,31 @@ namespace CustomerService.Data
                     throw new CustomerException("Something went wrong, try again later");
             }    
         }
+        public List<CustomerInfo> FilterCustomers(string column, string substringValue)
+        {
+
+
+            List<CustomerInfo> customers = new List<CustomerInfo>();
+
+            using (BankDatabaseContainer context = new BankDatabaseContainer())
+            {
+                var result = context.spBankDatabase_FilterCustomers(column, substringValue);
+
+                foreach (var item in result)
+                {
+                    customers.Add(new CustomerInfo
+                    {
+                        Id = item.Id,
+                        FirstName = item.Firstname,
+                        LastName = item.Lastname,
+                        Email = item.Email,
+                        JoinedOnDate = item.JoinedOnDate,
+                        CurrentBalance = item.CurrentBalance,
+                        SavingsBalance = item.SavingsBalance,
+                    });
+                }
+            }
+            return customers;     
+        }      
     }
 }

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using BankUI.Properties;
+using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -16,33 +18,27 @@ namespace BankUI
 
         private static Mutex instance;
         private const string appName = "Bank Service";
-        //static bool isAuthenticated = false;
 
         [STAThread]
         static void Main(string[] args)
         {
-
-            // To run BankUI.exe without Launcher  comment section below, or start BankUi.exe from Command Promt with "true" argument
-            //isAuthenticated = Convert.ToBoolean(args[0]);
-
-            //if (!isAuthenticated)
-            //    return;
-            //--------------------------------------------------
-
             bool tryCreateNewApp;
             instance = new Mutex(true, appName, out tryCreateNewApp);
 
             if (tryCreateNewApp)
-            {
-                                                                            //Write your path--------------------------------------------
-                //Process.Start(new ProcessStartInfo { FileName = @"D:\Simple WCF Service\CustomerService\bin\Debug\CustomerService.exe", WindowStyle = ProcessWindowStyle.Hidden});
-
+            {            
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo($"{Settings.Default.CurrentCulture}");
+                Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo($"{Settings.Default.CurrentCulture}");
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Main_Form());
-
-                //Process.Start(new ProcessStartInfo { FileName = "cmd", Arguments = $"/c taskkill /f /im CustomerService.exe", WindowStyle = ProcessWindowStyle.Hidden }).WaitForExit();
+                Application.Run(new Main_Form());                  
             }
+            //Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo($"{Settings.Default.CurrentCulture}");
+            //Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo($"{Settings.Default.CurrentCulture}");
+            //
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new Main_Form());
         } 
     }
 }

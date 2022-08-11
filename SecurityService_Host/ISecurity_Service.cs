@@ -14,5 +14,8 @@ namespace SecurityService_Host
 
         [OperationContract]
         Task<bool> SignUp(string username, string email, string password);
+
+        [OperationContract(IsOneWay = true)]
+        Task SignOut(string Id, string username);
     }
 }

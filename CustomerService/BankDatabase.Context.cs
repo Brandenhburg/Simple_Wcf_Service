@@ -120,5 +120,65 @@ namespace CustomerService
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spBankDatabase_WithdrawalFromSavingsAccount", customerIdParameter, requestedFundsParameter);
         }
+    
+        public virtual ObjectResult<CustomerInfo_Result> spBankDatabase_GetFilteredCustomers(string column, string enteredParam)
+        {
+            var columnParameter = column != null ?
+                new ObjectParameter("Column", column) :
+                new ObjectParameter("Column", typeof(string));
+    
+            var enteredParamParameter = enteredParam != null ?
+                new ObjectParameter("EnteredParam", enteredParam) :
+                new ObjectParameter("EnteredParam", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CustomerInfo_Result>("spBankDatabase_GetFilteredCustomers", columnParameter, enteredParamParameter);
+        }
+    
+        public virtual ObjectResult<spBankDatabase_GetCustomersInfo_Result> spBankDatabase_GetCustomersInfo()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spBankDatabase_GetCustomersInfo_Result>("spBankDatabase_GetCustomersInfo");
+        }
+    
+        public virtual ObjectResult<spBankDatabase_FilterCustomers_Result> spBankDatabase_FilterCustomers(string column, string subStringValue)
+        {
+            var columnParameter = column != null ?
+                new ObjectParameter("Column", column) :
+                new ObjectParameter("Column", typeof(string));
+    
+            var subStringValueParameter = subStringValue != null ?
+                new ObjectParameter("SubStringValue", subStringValue) :
+                new ObjectParameter("SubStringValue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spBankDatabase_FilterCustomers_Result>("spBankDatabase_FilterCustomers", columnParameter, subStringValueParameter);
+        }
+    
+        public virtual int spBankDatabase_CreateNewCustomer_AllowDuplicates(string firstName, string lastName, string email, string joinedOnDate, Nullable<decimal> currentAccountBalance, Nullable<decimal> savingsAccountBalance)
+        {
+            var firstNameParameter = firstName != null ?
+                new ObjectParameter("FirstName", firstName) :
+                new ObjectParameter("FirstName", typeof(string));
+    
+            var lastNameParameter = lastName != null ?
+                new ObjectParameter("LastName", lastName) :
+                new ObjectParameter("LastName", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var joinedOnDateParameter = joinedOnDate != null ?
+                new ObjectParameter("JoinedOnDate", joinedOnDate) :
+                new ObjectParameter("JoinedOnDate", typeof(string));
+    
+            var currentAccountBalanceParameter = currentAccountBalance.HasValue ?
+                new ObjectParameter("CurrentAccountBalance", currentAccountBalance) :
+                new ObjectParameter("CurrentAccountBalance", typeof(decimal));
+    
+            var savingsAccountBalanceParameter = savingsAccountBalance.HasValue ?
+                new ObjectParameter("SavingsAccountBalance", savingsAccountBalance) :
+                new ObjectParameter("SavingsAccountBalance", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spBankDatabase_CreateNewCustomer_AllowDuplicates", firstNameParameter, lastNameParameter, emailParameter, joinedOnDateParameter, currentAccountBalanceParameter, savingsAccountBalanceParameter);
+        }
     }
 }

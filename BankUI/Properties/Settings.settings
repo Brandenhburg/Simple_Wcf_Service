@@ -8,5 +8,11 @@
     <Setting Name="Light_Theme" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="CurrentCulture" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="FirstApplicationStart" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

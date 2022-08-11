@@ -35,7 +35,7 @@ namespace SecurityService_Host.Data
 
             return true;        
         }
-        public static Employee GetEployee(string userName, string password)
+        public static Employee GetEmployee(string userName, string password)
         {
             Thread.Sleep(4000);
 
@@ -52,7 +52,6 @@ namespace SecurityService_Host.Data
 
             return employee;
         }
-
 
 
 

@@ -46,5 +46,29 @@ namespace BankUI.Properties {
                 this["Light_Theme"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CurrentCulture {
+            get {
+                return ((string)(this["CurrentCulture"]));
+            }
+            set {
+                this["CurrentCulture"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool FirstApplicationStart {
+            get {
+                return ((bool)(this["FirstApplicationStart"]));
+            }
+            set {
+                this["FirstApplicationStart"] = value;
+            }
+        }
     }
 }

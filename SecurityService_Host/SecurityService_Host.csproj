@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ActiveEmployees.cs" />
     <Compile Include="Data\EmployeeAccType.cs" />
     <Compile Include="Data\Employee.cs" />
     <Compile Include="Data\EmployeesMockDatabase.cs" />
@@ -59,6 +60,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SecurityService_Logger\SecurityService_Logger.csproj">
+      <Project>{5739067f-3c74-4206-bd75-6104e8e3df49}</Project>
+      <Name>SecurityService_Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SecurityService_LogWriter\SecurityService_LogWriter.csproj">
+      <Project>{0fbcbc56-1a9c-4c7c-a92c-9c63ae2dd121}</Project>
+      <Name>SecurityService_LogWriter</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

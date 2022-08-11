@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CustomerService
+namespace CustomerService.Contracts
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "ICustomerInfo_Service" in both code and config file together.
-    [ServiceContract(CallbackContract = typeof(ICustomerService_DuplexCallBack))]
+    [ServiceContract(CallbackContract  = typeof(ICustomerService_DuplexCallBack), SessionMode = SessionMode.Required)]
     public interface IBankCustomer_Service
     {
         [OperationContract(IsOneWay = true)]
@@ -34,6 +26,9 @@ namespace CustomerService
 
         [OperationContract(IsOneWay = true)]
         void GetAllCustomers();
+
+        [OperationContract(IsOneWay = true)]
+        void FilterCustomers(string column, string substringValue);
         
     }
 

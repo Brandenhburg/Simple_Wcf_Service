@@ -16,7 +16,6 @@ namespace SecurityService_Host
             {
                 EmployeesMockDatabase.AddDefaultEmployee();
 
-
                 host.Open();
                 Console.WriteLine(host.BaseAddresses[0].ToString()); 
                 Console.WriteLine("Service Host started");

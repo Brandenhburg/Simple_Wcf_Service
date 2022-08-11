@@ -78,26 +78,34 @@
             // 
             // button_Submit
             // 
-            this.button_Submit.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button_Submit.BackColor = System.Drawing.SystemColors.Control;
+            this.button_Submit.FlatAppearance.BorderSize = 0;
+            this.button_Submit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightSkyBlue;
+            this.button_Submit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
+            this.button_Submit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Submit.Font = new System.Drawing.Font("Lucida Fax", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Submit.Location = new System.Drawing.Point(10, 336);
             this.button_Submit.Name = "button_Submit";
             this.button_Submit.Size = new System.Drawing.Size(360, 37);
             this.button_Submit.TabIndex = 1;
             this.button_Submit.Text = "Submit";
-            this.button_Submit.UseVisualStyleBackColor = true;
+            this.button_Submit.UseVisualStyleBackColor = false;
             this.button_Submit.Click += new System.EventHandler(this.button_Submit_Click);
             // 
             // button_backToLogin
             // 
-            this.button_backToLogin.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button_backToLogin.BackColor = System.Drawing.SystemColors.Control;
+            this.button_backToLogin.FlatAppearance.BorderSize = 0;
+            this.button_backToLogin.FlatAppearance.MouseDownBackColor = System.Drawing.Color.LightSkyBlue;
+            this.button_backToLogin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
+            this.button_backToLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_backToLogin.Font = new System.Drawing.Font("Lucida Fax", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_backToLogin.Location = new System.Drawing.Point(10, 431);
             this.button_backToLogin.Name = "button_backToLogin";
             this.button_backToLogin.Size = new System.Drawing.Size(360, 37);
             this.button_backToLogin.TabIndex = 1;
             this.button_backToLogin.Text = "Back to Login";
-            this.button_backToLogin.UseVisualStyleBackColor = true;
+            this.button_backToLogin.UseVisualStyleBackColor = false;
             this.button_backToLogin.Click += new System.EventHandler(this.button_backToLogin_Click);
             // 
             // label_ConfirmPassword
@@ -151,7 +159,7 @@
             this.linkLabel_Exit.TabIndex = 3;
             this.linkLabel_Exit.TabStop = true;
             this.linkLabel_Exit.Text = "Exit";
-            this.linkLabel_Exit.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.linkLabel_Exit.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_Exit_LinkClicked);
             // 
             // label_Error
             // 
@@ -162,10 +170,11 @@
             this.label_Error.Size = new System.Drawing.Size(0, 16);
             this.label_Error.TabIndex = 4;
             // 
-            // Register_Form
+            // SignUp_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(380, 480);
             this.Controls.Add(this.textBox_Username);
             this.Controls.Add(this.textBox_Email);
@@ -182,8 +191,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximumSize = new System.Drawing.Size(380, 480);
             this.MinimumSize = new System.Drawing.Size(380, 480);
-            this.Name = "Register_Form";
+            this.Name = "SignUp_Form";
             this.Text = "Register_Form";
+            this.Load += new System.EventHandler(this.SignUp_Form_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Register_Form_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Register_Form_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Register_Form_MouseUp);

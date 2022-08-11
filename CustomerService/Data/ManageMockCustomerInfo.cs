@@ -30,7 +30,17 @@ namespace CustomerService.Data
             Database.MockCustomers.Remove(new CustomerInfo { Id = customerId });
         }
 
-        public IEnumerable<CustomerInfo> GetAllCustomers() => Database.MockCustomers;
+        public List<CustomerInfo> FilterCustomers(string column, string substringParam)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CustomerInfo> FilterCustomers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CustomerInfo> GetAllCustomers() => Database.MockCustomers;
 
         public CustomerInfo GetUpdatedInfo(int customerid)
         {

@@ -4,6 +4,8 @@ using System.Drawing;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using BankUI.BankCustomers;
 using BankUI.Properties;
 using BankUI.Security;
 
@@ -20,50 +22,48 @@ namespace BankUI.Launcher
         bool mouseDown = false;
 
         Main_Form main_Form;
+        SignUp_Form signUp_form;
 
         #endregion
 
-
         public Authentication_Form(Main_Form main_Form)
         {
+
+            //Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo($"{Settings.Default.CurrentCulture.ToLower()}");
+            //Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo($"{Settings.Default.CurrentCulture.ToLower()}");
+
             this.main_Form = main_Form;
 
             StartPosition = FormStartPosition.CenterScreen;
             Settings.Default.Light_Theme = true;
-            securityService_client = new Security_ServiceClient("NetTcpBinding_ISecurity_Service");
-
+            main_Form.Security_ServiceClient = new Security_ServiceClient("NetTcpBinding_ISecurity_Service");
+   
             InitializeComponent();
+       
         }
 
-        public Security_ServiceClient securityService_client { get; private set; }
-
+        private void Authentication_Form_Load(object sender, EventArgs e) => WinAPI.AnimateWindow(Handle, 200, WinAPI.BLEND); 
         protected override void OnClosing(CancelEventArgs e)
         {
             if (!main_Form.IsAuthenticated)
                 Application.Exit();
         }
-        private void Authentication_Form_Load(object sender, EventArgs e) => main_Form.Hide();
 
 
-        private async void button_Authenticate_Click(object sender, EventArgs e)
+        private async void button_SignIn_Click(object sender, EventArgs e)
         {
-
             DisableFormControls();
 
             try
-            {               
-                Employee currentEmployee = await securityService_client.SignInAsync(textBox_username.Text, textBox_Password.Text);
+            {
+                Employee currentEmployee = await main_Form.Security_ServiceClient.SignInAsync(textBox_username.Text, textBox_Password.Text);
 
                 label_Error.ForeColor = Color.Green;
                 label_Error.Text = "Confirmed";
 
-
                 await Task.Delay(1500);
 
-                
-                main_Form.currentEmployee = currentEmployee;
-                main_Form.Enabled = true;
-                main_Form.IsAuthenticated = true;
+                OnSignInConfirmed(currentEmployee);
 
                 Close();
             }
@@ -77,28 +77,47 @@ namespace BankUI.Launcher
                 return;
             }
         }
-
-
-
-        private void button_GetAccess_Click(object sender, EventArgs e)
+        private  void button_GetAccess_Click(object sender, EventArgs e)
         {
-            SignUp_Form form = new SignUp_Form(this);
-            form.ShowDialog();
 
 
-            textBox_username.Clear();
-            textBox_Password.Clear();
+            signUp_form = new SignUp_Form(this,main_Form);
+            signUp_form.ShowDialog(this);
+
+            
+
+            //textBox_username.Clear();
+            //textBox_Password.Clear();
         }
-
         private void linkLabel_ReadOnlyMode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            //TODO
+        }
+        private async void linkLabel_ExitApp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            while (Opacity > .80)
+            {
+                await Task.Delay(1);
+                Opacity -= .04;
+            }    
+            Application.Exit();         
+        }   
+        private void OnSignInConfirmed(Employee currentEmployee)
+        {
+            main_Form.signedInEmployee = currentEmployee;
+            main_Form.Enabled = true;
+            main_Form.IsAuthenticated = true;
+            main_Form.EmployeeAccSettings.Text = currentEmployee.Username;
 
+
+            main_Form.instanceContext = new InstanceContext(main_Form);
+            main_Form.bankCustomer_ServiceClient = new BankCustomer_ServiceClient(main_Form.instanceContext, "NetTcpBinding_IBankCustomer_Service");
+
+            main_Form.Show();
         }
 
-        private void linkLabel_ExitApp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => Application.Exit();
 
-
-        #region [Mouse Events]
+        #region [Move Form Events]
         private void Authentication_Form_MouseDown(object sender, MouseEventArgs e)
         {
             mouseDiffPoint.X = Cursor.Position.X - Left;
@@ -117,14 +136,13 @@ namespace BankUI.Launcher
 
         #endregion
 
-
         #region [Manage Form Controls]
         private void DisableFormControls()
         {
             textBox_username.Enabled = false;
             textBox_Password.Enabled = false;
 
-            button_Authenticate.Enabled = false;
+            button_SignIn.Enabled = false;
             button_GetAccess.Enabled = false;
 
             linkLabel_ReadOnlyMode.Enabled = false;
@@ -134,12 +152,13 @@ namespace BankUI.Launcher
             textBox_username.Enabled = true;
             textBox_Password.Enabled = true;
 
-            button_Authenticate.Enabled = true;
-            button_Authenticate.Focus();
+            button_SignIn.Enabled = true;
+            button_SignIn.Focus();
 
             button_GetAccess.Enabled = true;
             linkLabel_ReadOnlyMode.Enabled = true;
         }
+
         #endregion
     }
 }

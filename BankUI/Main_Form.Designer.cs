@@ -42,7 +42,7 @@ namespace BankUI
             this.label_SavingsBalance = new System.Windows.Forms.Label();
             this.button_AddNewCustomer = new System.Windows.Forms.Button();
             this.button_RemoveCustomer = new System.Windows.Forms.Button();
-            this.button_ViewAllCustomers = new System.Windows.Forms.Button();
+            this.button_ViewCustomers = new System.Windows.Forms.Button();
             this.button_ManageFunds = new System.Windows.Forms.Button();
             this.panel_ManageFunds = new System.Windows.Forms.Panel();
             this.label_toAccountType = new System.Windows.Forms.Label();
@@ -62,9 +62,23 @@ namespace BankUI
             this.ToolStripMenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.myTitleButton_ExitApp = new BankUI.Customizing.MyTittleButton();
+            this.myTitleButton_Minimize = new BankUI.Customizing.MyTittleButton();
+            this.myTitleButton_EmployeeAccSettings = new BankUI.Customizing.MyTittleButton();
             this.panel_ManageFunds.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // button_SearchCustomer
+            // 
+            this.button_SearchCustomer.Font = new System.Drawing.Font("Lucida Fax", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_SearchCustomer.Location = new System.Drawing.Point(36, 38);
+            this.button_SearchCustomer.Name = "button_SearchCustomer";
+            this.button_SearchCustomer.Size = new System.Drawing.Size(100, 40);
+            this.button_SearchCustomer.TabIndex = 11;
+            this.button_SearchCustomer.Text = "Search Customer";
+            this.button_SearchCustomer.UseVisualStyleBackColor = true;
+            this.button_SearchCustomer.Click += new System.EventHandler(this.button_SearchCustomer_Click);
             // 
             // label_CustomerId
             // 
@@ -178,27 +192,16 @@ namespace BankUI
             this.button_RemoveCustomer.UseVisualStyleBackColor = true;
             this.button_RemoveCustomer.Click += new System.EventHandler(this.button_RemoveCustomer_Click);
             // 
-            // button_SearchCustomer
+            // button_ViewCustomers
             // 
-            this.button_SearchCustomer.Font = new System.Drawing.Font("Lucida Fax", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_SearchCustomer.Location = new System.Drawing.Point(36, 38);
-            this.button_SearchCustomer.Name = "button_SearchCustomer";
-            this.button_SearchCustomer.Size = new System.Drawing.Size(100, 40);
-            this.button_SearchCustomer.TabIndex = 11;
-            this.button_SearchCustomer.Text = "Search Customer";
-            this.button_SearchCustomer.UseVisualStyleBackColor = true;
-            this.button_SearchCustomer.Click += new System.EventHandler(this.button_SearchCustomer_Click);
-            // 
-            // button_ViewAllCustomers
-            // 
-            this.button_ViewAllCustomers.Font = new System.Drawing.Font("Lucida Fax", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_ViewAllCustomers.Location = new System.Drawing.Point(580, 55);
-            this.button_ViewAllCustomers.Name = "button_ViewAllCustomers";
-            this.button_ViewAllCustomers.Size = new System.Drawing.Size(140, 40);
-            this.button_ViewAllCustomers.TabIndex = 12;
-            this.button_ViewAllCustomers.Text = "View Customers";
-            this.button_ViewAllCustomers.UseVisualStyleBackColor = true;
-            this.button_ViewAllCustomers.Click += new System.EventHandler(this.button_ViewAllCustomers_Click);
+            this.button_ViewCustomers.Font = new System.Drawing.Font("Lucida Fax", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_ViewCustomers.Location = new System.Drawing.Point(580, 55);
+            this.button_ViewCustomers.Name = "button_ViewCustomers";
+            this.button_ViewCustomers.Size = new System.Drawing.Size(140, 40);
+            this.button_ViewCustomers.TabIndex = 12;
+            this.button_ViewCustomers.Text = "View Customers";
+            this.button_ViewCustomers.UseVisualStyleBackColor = true;
+            this.button_ViewCustomers.Click += new System.EventHandler(this.button_ViewCustomers_Click);
             // 
             // button_ManageFunds
             // 
@@ -351,13 +354,14 @@ namespace BankUI
             // 
             // menuStrip
             // 
-            this.menuStrip.BackColor = System.Drawing.SystemColors.Window;
+            this.menuStrip.BackColor = System.Drawing.SystemColors.Menu;
+            this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.toolsToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(784, 25);
+            this.menuStrip.Size = new System.Drawing.Size(97, 25);
             this.menuStrip.TabIndex = 15;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -405,17 +409,59 @@ namespace BankUI
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
+            // myTitleButton_ExitApp
+            // 
+            this.myTitleButton_ExitApp.FlatAppearance.BorderSize = 0;
+            this.myTitleButton_ExitApp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.myTitleButton_ExitApp.Location = new System.Drawing.Point(735, 0);
+            this.myTitleButton_ExitApp.Margin = new System.Windows.Forms.Padding(0);
+            this.myTitleButton_ExitApp.Name = "myTitleButton_ExitApp";
+            this.myTitleButton_ExitApp.Size = new System.Drawing.Size(50, 25);
+            this.myTitleButton_ExitApp.TabIndex = 29;
+            this.myTitleButton_ExitApp.Text = "X";
+            this.myTitleButton_ExitApp.UseVisualStyleBackColor = true;
+            this.myTitleButton_ExitApp.Click += new System.EventHandler(this.myTitleButton_ExitApp_Click);
+            // 
+            // myTitleButton_Minimize
+            // 
+            this.myTitleButton_Minimize.FlatAppearance.BorderSize = 0;
+            this.myTitleButton_Minimize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.myTitleButton_Minimize.Location = new System.Drawing.Point(685, 0);
+            this.myTitleButton_Minimize.Margin = new System.Windows.Forms.Padding(0);
+            this.myTitleButton_Minimize.Name = "myTitleButton_Minimize";
+            this.myTitleButton_Minimize.Size = new System.Drawing.Size(50, 25);
+            this.myTitleButton_Minimize.TabIndex = 28;
+            this.myTitleButton_Minimize.Text = "——";
+            this.myTitleButton_Minimize.UseVisualStyleBackColor = true;
+            this.myTitleButton_Minimize.Click += new System.EventHandler(this.myTitleButton_Minimize_Click);
+            // 
+            // myTitleButton_EmployeeAccSettings
+            // 
+            this.myTitleButton_EmployeeAccSettings.FlatAppearance.BorderSize = 0;
+            this.myTitleButton_EmployeeAccSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.myTitleButton_EmployeeAccSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.myTitleButton_EmployeeAccSettings.Location = new System.Drawing.Point(560, 0);
+            this.myTitleButton_EmployeeAccSettings.Margin = new System.Windows.Forms.Padding(0);
+            this.myTitleButton_EmployeeAccSettings.Name = "myTitleButton_EmployeeAccSettings";
+            this.myTitleButton_EmployeeAccSettings.Size = new System.Drawing.Size(125, 25);
+            this.myTitleButton_EmployeeAccSettings.TabIndex = 27;
+            this.myTitleButton_EmployeeAccSettings.UseVisualStyleBackColor = true;
+            this.myTitleButton_EmployeeAccSettings.Click += new System.EventHandler(this.myTitleButton_EmployeeAccSettings_Click);
+            // 
             // Main_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 441);
+            this.ClientSize = new System.Drawing.Size(785, 440);
+            this.Controls.Add(this.myTitleButton_ExitApp);
+            this.Controls.Add(this.myTitleButton_Minimize);
+            this.Controls.Add(this.myTitleButton_EmployeeAccSettings);
             this.Controls.Add(this.button_SearchCustomer);
             this.Controls.Add(this.label_CustomerId);
             this.Controls.Add(this.panel_ManageFunds);
             this.Controls.Add(this.textBox_CustomerId);
             this.Controls.Add(this.button_AddNewCustomer);
-            this.Controls.Add(this.button_ViewAllCustomers);
+            this.Controls.Add(this.button_ViewCustomers);
             this.Controls.Add(this.button_RemoveCustomer);
             this.Controls.Add(this.button_ManageFunds);
             this.Controls.Add(this.label_CurrentBalance);
@@ -427,8 +473,11 @@ namespace BankUI
             this.Controls.Add(this.label_Lastname);
             this.Controls.Add(this.textBox_CustomerLastName_MainForm);
             this.Controls.Add(this.menuStrip);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Main_Form";
             this.Text = "Bank Manager";
+            this.Activated += new System.EventHandler(this.Main_Form_Activated);
             this.Load += new System.EventHandler(this.Main_Form_Load);
             this.panel_ManageFunds.ResumeLayout(false);
             this.panel_ManageFunds.PerformLayout();
@@ -454,7 +503,7 @@ namespace BankUI
         private System.Windows.Forms.Button button_AddNewCustomer;
         private System.Windows.Forms.Button button_RemoveCustomer;
         private System.Windows.Forms.Button button_SearchCustomer;
-        private System.Windows.Forms.Button button_ViewAllCustomers;
+        private System.Windows.Forms.Button button_ViewCustomers;
         private System.Windows.Forms.Button button_ManageFunds;
         private System.Windows.Forms.Panel panel_ManageFunds;
         private System.Windows.Forms.Button button_CancelManagerFunds;
@@ -474,6 +523,9 @@ namespace BankUI
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Exit;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private Customizing.MyTittleButton myTitleButton_EmployeeAccSettings;
+        private Customizing.MyTittleButton myTitleButton_Minimize;
+        private Customizing.MyTittleButton myTitleButton_ExitApp;
     }
 }
 

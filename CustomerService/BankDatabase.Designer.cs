@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Programming\C#_practice\WCF\StoredProcedure\CustomerService\BankDatabase.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Simple WCF Service\CustomerService\BankDatabase.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

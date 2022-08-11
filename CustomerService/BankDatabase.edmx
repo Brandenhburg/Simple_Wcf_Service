@@ -69,6 +69,14 @@
           <Parameter Name="CurrentAccountBalance" Type="decimal" Mode="In" />
           <Parameter Name="SavingsAccountBalance" Type="decimal" Mode="In" />
         </Function>
+        <Function Name="spBankDatabase_CreateNewCustomer_AllowDuplicates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FirstName" Type="nvarchar" Mode="In" />
+          <Parameter Name="LastName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="JoinedOnDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="CurrentAccountBalance" Type="decimal" Mode="In" />
+          <Parameter Name="SavingsAccountBalance" Type="decimal" Mode="In" />
+        </Function>
         <Function Name="spBankDatabase_DeleteCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CustomerId" Type="int" Mode="In" />
         </Function>
@@ -79,6 +87,15 @@
         <Function Name="spBankDatabase_DepositToSavingsAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CustomerId" Type="int" Mode="In" />
           <Parameter Name="Funds" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="spBankDatabase_FilterCustomers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Column" Type="varchar" Mode="In" />
+          <Parameter Name="SubStringValue" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spBankDatabase_GetCustomersInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spBankDatabase_GetFilteredCustomers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Column" Type="varchar" Mode="In" />
+          <Parameter Name="EnteredParam" Type="varchar" Mode="In" />
         </Function>
         <Function Name="spBankDatabase_WithdrawalFromCurrentAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CustomerId" Type="int" Mode="In" />
@@ -144,6 +161,23 @@
             <Parameter Name="CustomerId" Mode="In" Type="Int32" />
             <Parameter Name="RequestedFunds" Mode="In" Type="Decimal" />
           </FunctionImport>
+          <FunctionImport Name="spBankDatabase_GetFilteredCustomers" ReturnType="Collection(BankDatabase.CustomerInfo_Result)">
+            <Parameter Name="Column" Mode="In" Type="String" />
+            <Parameter Name="EnteredParam" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spBankDatabase_GetCustomersInfo" ReturnType="Collection(BankDatabase.spBankDatabase_GetCustomersInfo_Result)" />
+          <FunctionImport Name="spBankDatabase_FilterCustomers" ReturnType="Collection(BankDatabase.spBankDatabase_FilterCustomers_Result)">
+            <Parameter Name="Column" Mode="In" Type="String" />
+            <Parameter Name="SubStringValue" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spBankDatabase_CreateNewCustomer_AllowDuplicates">
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="JoinedOnDate" Mode="In" Type="String" />
+            <Parameter Name="CurrentAccountBalance" Mode="In" Type="Decimal" />
+            <Parameter Name="SavingsAccountBalance" Mode="In" Type="Decimal" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Customer">
           <Key>
@@ -187,6 +221,33 @@
             <OnDelete Action="Cascade" />
           </End>
         </Association>
+        <ComplexType Name="CustomerInfo_Result" >
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Lastname" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" />
+          <Property Type="String" Name="JoinedOnDate" Nullable="false" />
+          <Property Type="Decimal" Name="CurrentBalance" Nullable="false" />
+          <Property Type="Decimal" Name="SavingsBalance" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spBankDatabase_GetCustomersInfo_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Firstname" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Lastname" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="JoinedOnDate" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="CurrentBalance" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="SavingsBalance" Nullable="false" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="spBankDatabase_FilterCustomers_Result" >
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Firstname" Nullable="false" />
+          <Property Type="String" Name="Lastname" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" />
+          <Property Type="String" Name="JoinedOnDate" Nullable="false" />
+          <Property Type="Decimal" Name="CurrentBalance" Nullable="false" />
+          <Property Type="Decimal" Name="SavingsBalance" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -244,6 +305,46 @@
           <FunctionImportMapping FunctionImportName="spBankDatabase_DepositToCurrentAccount" FunctionName="BankDatabase.Store.spBankDatabase_DepositToCurrentAccount" />
           <FunctionImportMapping FunctionImportName="spBankDatabase_DepositToSavingsAccount" FunctionName="BankDatabase.Store.spBankDatabase_DepositToSavingsAccount" />
           <FunctionImportMapping FunctionImportName="spBankDatabase_WithdrawalFromSavingsAccount" FunctionName="BankDatabase.Store.spBankDatabase_WithdrawalFromSavingsAccount" />
+          <FunctionImportMapping FunctionImportName="spBankDatabase_GetFilteredCustomers" FunctionName="BankDatabase.Store.spBankDatabase_GetFilteredCustomers" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BankDatabase.CustomerInfo_Result" >
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="JoinedOnDate" ColumnName="JoinedOnDate" />
+                <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
+                <ScalarProperty Name="SavingsBalance" ColumnName="SavingsBalance" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spBankDatabase_GetCustomersInfo" FunctionName="BankDatabase.Store.spBankDatabase_GetCustomersInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BankDatabase.spBankDatabase_GetCustomersInfo_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="JoinedOnDate" ColumnName="JoinedOnDate" />
+                <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
+                <ScalarProperty Name="SavingsBalance" ColumnName="SavingsBalance" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spBankDatabase_FilterCustomers" FunctionName="BankDatabase.Store.spBankDatabase_FilterCustomers" >
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="BankDatabase.spBankDatabase_FilterCustomers_Result" >
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="JoinedOnDate" ColumnName="JoinedOnDate" />
+                <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
+                <ScalarProperty Name="SavingsBalance" ColumnName="SavingsBalance" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spBankDatabase_CreateNewCustomer_AllowDuplicates" FunctionName="BankDatabase.Store.spBankDatabase_CreateNewCustomer_AllowDuplicates" />
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -257,10 +358,10 @@
     <edmx:Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
         <DesignerProperty Name="UseLegacyProvider" Value="False" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->

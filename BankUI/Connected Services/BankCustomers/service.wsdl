@@ -67,6 +67,9 @@
   <wsdl:message name="IBankCustomer_Service_GetAllCustomers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAllCustomers" />
   </wsdl:message>
+  <wsdl:message name="IBankCustomer_Service_FilterCustomers_InputMessage">
+    <wsdl:part name="parameters" element="tns:FilterCustomers" />
+  </wsdl:message>
   <wsdl:message name="IBankCustomer_Service_SendCustomerInfo_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendCustomerInfo" />
   </wsdl:message>
@@ -76,35 +79,38 @@
   <wsdl:message name="IBankCustomer_Service_SendAllCustomers_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendAllCustomers" />
   </wsdl:message>
-  <wsdl:portType name="IBankCustomer_Service">
-    <wsdl:operation name="CreateCustomer">
+  <wsdl:portType msc:usingSession="true" name="IBankCustomer_Service">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CreateCustomer">
       <wsdl:input wsaw:Action="http://tempuri.org/IBankCustomer_Service/CreateCustomer" message="tns:IBankCustomer_Service_CreateCustomer_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="DeleteCustomer">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="DeleteCustomer">
       <wsdl:input wsaw:Action="http://tempuri.org/IBankCustomer_Service/DeleteCustomer" message="tns:IBankCustomer_Service_DeleteCustomer_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetCustomerInfo">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetCustomerInfo">
       <wsdl:input wsaw:Action="http://tempuri.org/IBankCustomer_Service/GetCustomerInfo" message="tns:IBankCustomer_Service_GetCustomerInfo_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Withdraw">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Withdraw">
       <wsdl:input wsaw:Action="http://tempuri.org/IBankCustomer_Service/Withdraw" message="tns:IBankCustomer_Service_Withdraw_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Deposit">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Deposit">
       <wsdl:input wsaw:Action="http://tempuri.org/IBankCustomer_Service/Deposit" message="tns:IBankCustomer_Service_Deposit_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="InnerTransfer">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InnerTransfer">
       <wsdl:input wsaw:Action="http://tempuri.org/IBankCustomer_Service/InnerTransfer" message="tns:IBankCustomer_Service_InnerTransfer_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetAllCustomers">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllCustomers">
       <wsdl:input wsaw:Action="http://tempuri.org/IBankCustomer_Service/GetAllCustomers" message="tns:IBankCustomer_Service_GetAllCustomers_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SendCustomerInfo">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="FilterCustomers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBankCustomer_Service/FilterCustomers" message="tns:IBankCustomer_Service_FilterCustomers_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SendCustomerInfo">
       <wsdl:output wsaw:Action="http://tempuri.org/IBankCustomer_Service/SendCustomerInfo" message="tns:IBankCustomer_Service_SendCustomerInfo_OutputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="OperationResult">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OperationResult">
       <wsdl:output wsaw:Action="http://tempuri.org/IBankCustomer_Service/OperationResult" message="tns:IBankCustomer_Service_OperationResult_OutputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SendAllCustomers">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SendAllCustomers">
       <wsdl:output wsaw:Action="http://tempuri.org/IBankCustomer_Service/SendAllCustomers" message="tns:IBankCustomer_Service_SendAllCustomers_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
@@ -150,6 +156,12 @@
     </wsdl:operation>
     <wsdl:operation name="GetAllCustomers">
       <soap12:operation soapAction="http://tempuri.org/IBankCustomer_Service/GetAllCustomers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="FilterCustomers">
+      <soap12:operation soapAction="http://tempuri.org/IBankCustomer_Service/FilterCustomers" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -2,36 +2,36 @@
 using System.Drawing;
 using System.ServiceModel;
 using System.Windows.Forms;
-using BankUI.BankCustomers;
 
+using BankUI.BankCustomers;
 
 namespace BankUI
 {
     partial class AddNewCustomer_Form : Form, IBankCustomer_ServiceCallback
     {
-
+        #region [Fields]
         Label label_CurrentFunds;
         Label label_SavingsFunds;
         TextBox textBox_CurrentFundsValue;
         TextBox textBox_SavingsFundsValue;
 
 
-
         bool Depozit = false;
         Main_Form mainForm;
 
+        Point mousePositionDifference;
+        bool isMouseDown = false;
+
+
         BankCustomer_ServiceClient bankCustomer_ServiceClient;
+        #endregion
 
         public AddNewCustomer_Form(Main_Form mainForm, BankCustomer_ServiceClient customerInfo_ServiceClient)
         {
-
             this.mainForm = mainForm;
             this.mainForm.Enabled = false;
 
             StartPosition = FormStartPosition.CenterScreen;
-
-            MinimumSize = new Size { Width = 636, Height = 384};
-            MaximumSize = MinimumSize;
 
             
             bankCustomer_ServiceClient = 
@@ -39,7 +39,9 @@ namespace BankUI
             
             InitializeComponent();
         }
-        
+
+
+        #region [Manage Funds Methods]
         private void button_DepozitFunds_Click(object sender, EventArgs e)
         {
             Depozit = !Depozit;
@@ -126,8 +128,9 @@ namespace BankUI
             bankCustomer_ServiceClient.Close();
             mainForm.Enabled = true;
         }
+        #endregion [Form Methods]
 
-        //CallBacks
+        #region [Service Callbacks]
         public void SendCustomerInfo(CustomerInfo cust)
         {
             //throw new NotImplementedException();
@@ -141,5 +144,31 @@ namespace BankUI
         {
             throw new NotImplementedException();
         }
+        #endregion
+
+        #region [Mouse Events]
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            mousePositionDifference.X = Cursor.Position.X - Left;
+            mousePositionDifference.Y = Cursor.Position.Y - Top;
+            isMouseDown = true;
+        }
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if (isMouseDown)
+            {
+                Left = Cursor.Position.X - mousePositionDifference.X;
+                Top = Cursor.Position.Y - mousePositionDifference.Y;
+            }
+        }
+        protected override void OnMouseUp(MouseEventArgs e) => isMouseDown = false;
+        private void myTittleButton_CloseForm_Click(object sender, EventArgs e)
+        {         
+            mainForm.Show();
+            Close();
+        }     
+        private void myTittleButton1_Click(object sender, EventArgs e) => WindowState = FormWindowState.Minimized;
+        #endregion
+
     }
 }

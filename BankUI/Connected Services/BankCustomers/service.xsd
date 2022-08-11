@@ -60,6 +60,14 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="FilterCustomers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="column" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="substringValue" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="SendCustomerInfo">
     <xs:complexType>
       <xs:sequence>

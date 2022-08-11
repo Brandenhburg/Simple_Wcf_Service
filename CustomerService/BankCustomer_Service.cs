@@ -4,6 +4,8 @@ using System.ServiceModel;
 using CustomerService.Data;
 using CustomerService.ManageAccounts;
 using CustomerService.Exceptions;
+using CustomerService.Contracts;
+using System.ServiceModel.Channels;
 
 namespace CustomerService
 {
@@ -34,7 +36,6 @@ namespace CustomerService
                 OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult(ex.Message);
             }    
         }
-
         public void DeleteCustomer(int customerId)
         {
             try
@@ -50,14 +51,14 @@ namespace CustomerService
         }
 
 
-        //GetData
-        public void  GetCustomerInfo(int id)
+        #region [Get Customer INFO]
+        public void GetCustomerInfo(int id)
         {
             try
             {
                 CustomerInfo customerInfo = manageCustomerInfo.GetUpdatedInfo(id);
                 OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendCustomerInfo(customerInfo);
-            }
+            }          
             catch (CustomerException ex)
             {
                 OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult(ex.Message);
@@ -68,18 +69,36 @@ namespace CustomerService
             try
             {
                 //OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendAllCustomers(Database.MockCustomers);
+                
+                List<CustomerInfo> customers = manageCustomerInfo.GetAllCustomers();
 
-                IEnumerable<CustomerInfo> customers = manageCustomerInfo.GetAllCustomers();
-                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendAllCustomers(customers);
+                Console.WriteLine($"Session ID {OperationContext.Current.SessionId}");
+                
+                for (int i = 0; i < customers.Count; i++)
+                    OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendCustomerInfo(customers[i]);
+
             }
             catch (CustomerException ex)
             {
                 OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult(ex.Message);     
             }
         }
+        public void FilterCustomers(string column, string substringValue)
+        {
+            try
+            {
+                List<CustomerInfo> customers = manageCustomerInfo.FilterCustomers(column, substringValue);
+                for (int i = 0; i < customers.Count; i++)
+                    OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().SendCustomerInfo(customers[i]);
+            }
+            catch (Exception ex)
+            {
+                OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult(ex.Message);
+            }         
+        }
+        #endregion
 
-
-        //Operations
+        #region [Operations]
         public void Deposit(int customerId, decimal amount, string toAccountType)
         {
             accountManager = accounts.GetAccessToTheAccount(toAccountType);
@@ -120,5 +139,7 @@ namespace CustomerService
             else
                 OperationContext.Current.GetCallbackChannel<ICustomerService_DuplexCallBack>().OperationResult("Not enough funds");
         }
+        #endregion
+
     }
 }

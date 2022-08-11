@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/BankUI/resources
+/BankUI/Customizing/MyPictureBox.cs
+/BankUI/Customizing/CustomPictureBox.cs
+/BankUI/LangManager.cs

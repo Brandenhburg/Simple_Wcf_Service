@@ -29,6 +29,7 @@ namespace BankUI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddNewCustomer_Form));
             this.label1 = new System.Windows.Forms.Label();
             this.textBox_FirstName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -38,97 +39,83 @@ namespace BankUI
             this.button_DepozitFunds = new System.Windows.Forms.Button();
             this.button_CreateNewCustomer = new System.Windows.Forms.Button();
             this.button_CancelCreateNewCustomer = new System.Windows.Forms.Button();
+            this.myTittleButton_CloseForm = new BankUI.Customizing.MyTittleButton();
+            this.myTittleButton1 = new BankUI.Customizing.MyTittleButton();
             this.SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(93, 22);
+            resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Firstname";
             // 
             // textBox_FirstName
             // 
-            this.textBox_FirstName.Location = new System.Drawing.Point(96, 38);
+            resources.ApplyResources(this.textBox_FirstName, "textBox_FirstName");
             this.textBox_FirstName.Name = "textBox_FirstName";
-            this.textBox_FirstName.Size = new System.Drawing.Size(150, 20);
-            this.textBox_FirstName.TabIndex = 1;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(92, 72);
+            resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 15);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Lastname";
             // 
             // textBox_LastName
             // 
-            this.textBox_LastName.Location = new System.Drawing.Point(96, 88);
+            resources.ApplyResources(this.textBox_LastName, "textBox_LastName");
             this.textBox_LastName.Name = "textBox_LastName";
-            this.textBox_LastName.Size = new System.Drawing.Size(150, 20);
-            this.textBox_LastName.TabIndex = 3;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(93, 120);
+            resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(39, 15);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Email";
             // 
             // textBox_Email
             // 
-            this.textBox_Email.Location = new System.Drawing.Point(96, 136);
+            resources.ApplyResources(this.textBox_Email, "textBox_Email");
             this.textBox_Email.Name = "textBox_Email";
-            this.textBox_Email.Size = new System.Drawing.Size(150, 20);
-            this.textBox_Email.TabIndex = 5;
             // 
             // button_DepozitFunds
             // 
-            this.button_DepozitFunds.Font = new System.Drawing.Font("Lucida Fax", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_DepozitFunds.Location = new System.Drawing.Point(338, 213);
+            resources.ApplyResources(this.button_DepozitFunds, "button_DepozitFunds");
             this.button_DepozitFunds.Name = "button_DepozitFunds";
-            this.button_DepozitFunds.Size = new System.Drawing.Size(150, 40);
-            this.button_DepozitFunds.TabIndex = 6;
-            this.button_DepozitFunds.Text = "Depozit Funds";
             this.button_DepozitFunds.UseVisualStyleBackColor = true;
             this.button_DepozitFunds.Click += new System.EventHandler(this.button_DepozitFunds_Click);
             // 
             // button_CreateNewCustomer
             // 
-            this.button_CreateNewCustomer.Font = new System.Drawing.Font("Lucida Fax", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_CreateNewCustomer.Location = new System.Drawing.Point(95, 213);
+            resources.ApplyResources(this.button_CreateNewCustomer, "button_CreateNewCustomer");
             this.button_CreateNewCustomer.Name = "button_CreateNewCustomer";
-            this.button_CreateNewCustomer.Size = new System.Drawing.Size(150, 40);
-            this.button_CreateNewCustomer.TabIndex = 7;
-            this.button_CreateNewCustomer.Text = "Submit";
             this.button_CreateNewCustomer.UseVisualStyleBackColor = true;
             this.button_CreateNewCustomer.Click += new System.EventHandler(this.button_CreateNewCustomer_Click);
             // 
             // button_CancelCreateNewCustomer
             // 
-            this.button_CancelCreateNewCustomer.Font = new System.Drawing.Font("Lucida Fax", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_CancelCreateNewCustomer.Location = new System.Drawing.Point(95, 259);
+            resources.ApplyResources(this.button_CancelCreateNewCustomer, "button_CancelCreateNewCustomer");
             this.button_CancelCreateNewCustomer.Name = "button_CancelCreateNewCustomer";
-            this.button_CancelCreateNewCustomer.Size = new System.Drawing.Size(150, 40);
-            this.button_CancelCreateNewCustomer.TabIndex = 8;
-            this.button_CancelCreateNewCustomer.Text = "Exit";
             this.button_CancelCreateNewCustomer.UseVisualStyleBackColor = true;
             this.button_CancelCreateNewCustomer.Click += new System.EventHandler(this.button_CancelCreateNewCustomer_Click);
             // 
-            // AddNewCustomerForm
+            // myTittleButton_CloseForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.myTittleButton_CloseForm.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(this.myTittleButton_CloseForm, "myTittleButton_CloseForm");
+            this.myTittleButton_CloseForm.Name = "myTittleButton_CloseForm";
+            this.myTittleButton_CloseForm.UseVisualStyleBackColor = true;
+            this.myTittleButton_CloseForm.Click += new System.EventHandler(this.myTittleButton_CloseForm_Click);
+            // 
+            // myTittleButton1
+            // 
+            this.myTittleButton1.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(this.myTittleButton1, "myTittleButton1");
+            this.myTittleButton1.Name = "myTittleButton1";
+            this.myTittleButton1.UseVisualStyleBackColor = true;
+            this.myTittleButton1.Click += new System.EventHandler(this.myTittleButton1_Click);
+            // 
+            // AddNewCustomer_Form
+            // 
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(620, 345);
+            this.Controls.Add(this.myTittleButton1);
+            this.Controls.Add(this.myTittleButton_CloseForm);
             this.Controls.Add(this.button_CancelCreateNewCustomer);
             this.Controls.Add(this.button_CreateNewCustomer);
             this.Controls.Add(this.button_DepozitFunds);
@@ -138,8 +125,8 @@ namespace BankUI
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox_FirstName);
             this.Controls.Add(this.label1);
-            this.Name = "AddNewCustomerForm";
-            this.Text = "AddNewCustomerForm";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "AddNewCustomer_Form";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -158,5 +145,7 @@ namespace BankUI
         private System.Windows.Forms.Button button_DepozitFunds;
         private System.Windows.Forms.Button button_CreateNewCustomer;
         private System.Windows.Forms.Button button_CancelCreateNewCustomer;
+        private Customizing.MyTittleButton myTittleButton_CloseForm;
+        private Customizing.MyTittleButton myTittleButton1;
     }
 }

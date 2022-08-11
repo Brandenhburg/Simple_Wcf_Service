@@ -151,6 +151,12 @@ namespace BankUI.Security {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISecurity_Service/SignUp", ReplyAction="http://tempuri.org/ISecurity_Service/SignUpResponse")]
         System.Threading.Tasks.Task<bool> SignUpAsync(string username, string email, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ISecurity_Service/SignOut")]
+        void SignOut(string Id, string username);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ISecurity_Service/SignOut")]
+        System.Threading.Tasks.Task SignOutAsync(string Id, string username);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -194,6 +200,14 @@ namespace BankUI.Security {
         
         public System.Threading.Tasks.Task<bool> SignUpAsync(string username, string email, string password) {
             return base.Channel.SignUpAsync(username, email, password);
+        }
+        
+        public void SignOut(string Id, string username) {
+            base.Channel.SignOut(Id, username);
+        }
+        
+        public System.Threading.Tasks.Task SignOutAsync(string Id, string username) {
+            return base.Channel.SignOutAsync(Id, username);
         }
     }
 }

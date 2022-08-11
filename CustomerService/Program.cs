@@ -7,6 +7,8 @@ namespace CustomerService
     {
         static void  Main(string[] args)
         {
+
+            //Database.SeedDB();
             using (ServiceHost host = new ServiceHost(typeof(BankCustomer_Service)))
             {
                 host.Open();

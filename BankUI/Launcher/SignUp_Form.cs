@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Security.Cryptography;
-using System.ServiceModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BankUI.Security;
 
 namespace BankUI.Launcher
 {
@@ -16,20 +11,35 @@ namespace BankUI.Launcher
         Point mouseDiffPosition;
         bool mouseDown = false;
         Authentication_Form authentication_Form;
+        Main_Form main_Form;
 
-        public SignUp_Form(Authentication_Form authentication_Form)
+        public SignUp_Form(Authentication_Form authentication_Form, Main_Form main_Form)
         {
             StartPosition = FormStartPosition.Manual;
             Location = authentication_Form.Location;
 
+            this.main_Form = main_Form;
             this.authentication_Form = authentication_Form;
-            this.authentication_Form.Visible = false;
 
             InitializeComponent();
         }
 
+        private void SignUp_Form_Load(object sender, EventArgs e)
+        {
+            authentication_Form.Visible = false;
+            WinAPI.AnimateWindow(Handle, 300, WinAPI.BLEND);
+        }
 
 
+        private async void linkLabel_Exit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            while (Opacity > .8)
+            {
+                await Task.Delay(1);
+                Opacity -= .05;
+            }
+            Application.Exit();
+        }     
         private async void button_Submit_Click(object sender, EventArgs e)
         {
             
@@ -38,12 +48,11 @@ namespace BankUI.Launcher
             
             if (!PasswordMatching())
                 return;
-            
-            
+                  
             DisableFormControls();
-            
-            
-            bool isNewEmployeeCreated = await authentication_Form.securityService_client
+
+                   
+            bool isNewEmployeeCreated = await main_Form.Security_ServiceClient
                                                .SignUpAsync(textBox_Username.Text, textBox_Email.Text, textBox_ConfirmPassword.Text);
             
             if (isNewEmployeeCreated)
@@ -68,17 +77,22 @@ namespace BankUI.Launcher
                 EnableFormControls();
             }
         }
-        protected override void OnClosing(CancelEventArgs e)
+        private async void button_backToLogin_Click(object sender, EventArgs e)
         {
-            authentication_Form.Location = this.Location;
-            authentication_Form.Visible = true;
+            while (Opacity > .8)
+            {
+                await Task.Delay(1);
+                Opacity -= .05;
+            }
+
+            authentication_Form.Location = Location;
+            authentication_Form.Show();
+
+            Close();
         }
-        private void button_backToLogin_Click(object sender, EventArgs e) => Close();
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => Application.Exit();
+       
 
-
-
-        #region [MouseEvents]
+        #region [MoveFormEvents]
         private void Register_Form_MouseDown(object sender, MouseEventArgs e)
         {
             mouseDiffPosition.X = Cursor.Position.X - Left;
@@ -95,8 +109,6 @@ namespace BankUI.Launcher
             }
         }
         #endregion
-
-
 
         #region [Handlers]
         private bool PasswordMatching()
@@ -137,8 +149,6 @@ namespace BankUI.Launcher
         }
         #endregion
 
-
-
         #region [Manage Form Controls]
         private void EnableFormControls()
         {
@@ -148,6 +158,7 @@ namespace BankUI.Launcher
             textBox_ConfirmPassword.Enabled = true;
 
             button_Submit.Enabled = true;
+            button_Submit.Focus();
             button_backToLogin.Enabled = true;
             linkLabel_Exit.Enabled = true;
         }
@@ -162,6 +173,10 @@ namespace BankUI.Launcher
             button_backToLogin.Enabled = false;
             linkLabel_Exit.Enabled = false;
         }
+
+
+
         #endregion
+
     }
 }
